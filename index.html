@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Futures CVOL Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
     :root {
       --bg: #0d1117;
@@ -17,9 +18,7 @@
       --yellow: #d29922;
       --purple: #a371f7;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -27,165 +26,92 @@
       line-height: 1.5;
       min-height: 100vh;
     }
-
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.25rem 2rem;
-      border-bottom: 1px solid var(--border);
-      background: #010409;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 2rem; border-bottom: 1px solid var(--border); background: #010409;
     }
-
-    header h1 {
-      font-size: 1.35rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-
-    .meta {
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
+    header h1 { font-size: 1.3rem; font-weight: 600; }
+    .meta { font-size: 0.85rem; color: var(--muted); }
     .meta span { color: var(--accent); }
 
-    /* Navigation */
-    nav {
-      padding: 1rem 2rem 0.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      border-bottom: 1px solid var(--border);
-      background: #010409;
+    /* Top navigation */
+    .top-nav {
+      padding: 0.9rem 2rem 0.6rem; display: flex; flex-wrap: wrap; gap: 0.45rem;
+      border-bottom: 1px solid var(--border); background: #010409;
     }
-
     .nav-btn {
-      background: #21262d;
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.4rem 0.9rem;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.15s;
+      background: #21262d; border: 1px solid var(--border); color: var(--text);
+      padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.82rem;
+      cursor: pointer; transition: all 0.15s;
     }
-
     .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .nav-btn.active {
-      background: #1f6feb;
-      border-color: #1f6feb;
-      color: #fff;
-    }
+    .nav-btn.active { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+    .nav-btn.class { background: #0d419d; border-color: #1f6feb; }
 
-    .nav-btn.class-btn {
-      background: #0d419d;
-      border-color: #1f6feb;
+    /* Analysis tabs */
+    .analysis-tabs {
+      padding: 0.8rem 2rem; display: flex; flex-wrap: wrap; gap: 0.4rem;
+      background: #0d1117; border-bottom: 1px solid var(--border);
     }
+    .tab-btn {
+      background: transparent; border: 1px solid transparent; color: var(--muted);
+      padding: 0.35rem 0.9rem; border-radius: 6px; font-size: 0.84rem; cursor: pointer;
+    }
+    .tab-btn:hover { color: var(--text); background: #21262d; }
+    .tab-btn.active { color: var(--accent); border-color: var(--border); background: #161b22; }
 
-    /* Main content */
-    main {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 1.75rem 2rem 3rem;
-    }
+    main { max-width: 1320px; margin: 0 auto; padding: 1.5rem 2rem 3rem; }
 
     .section-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border);
+      font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;
+      padding-bottom: 0.45rem; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.25rem;
-    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
 
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.25rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.15rem;
     }
-
-    .card h3 {
-      font-size: 1.05rem;
-      margin-bottom: 0.75rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .card h3 { font-size: 1rem; margin-bottom: 0.7rem; display: flex; justify-content: space-between; }
 
     .badge {
-      font-size: 0.75rem;
-      padding: 0.15rem 0.55rem;
-      border-radius: 999px;
-      font-weight: 500;
+      font-size: 0.72rem; padding: 0.12rem 0.5rem; border-radius: 999px; font-weight: 500;
     }
-
     .badge.high { background: #23863633; color: var(--green); }
     .badge.low  { background: #da363333; color: var(--red); }
     .badge.mid  { background: #9e6a0333; color: var(--yellow); }
 
     .metric-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.35rem 0;
-      font-size: 0.9rem;
-      border-bottom: 1px solid #21262d;
+      display: flex; justify-content: space-between; padding: 0.3rem 0;
+      font-size: 0.88rem; border-bottom: 1px solid #21262d;
     }
-
     .metric-row:last-child { border-bottom: none; }
-
     .metric-label { color: var(--muted); }
     .metric-value { font-weight: 500; }
+    .up { color: var(--green); } .down { color: var(--red); }
 
-    .up   { color: var(--green); }
-    .down { color: var(--red); }
-
-    /* Term structure table */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-      margin-top: 0.5rem;
-    }
-
-    th, td {
-      padding: 0.4rem 0.6rem;
-      text-align: right;
-      border-bottom: 1px solid #21262d;
-    }
-
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 0.4rem; }
+    th, td { padding: 0.35rem 0.5rem; text-align: right; border-bottom: 1px solid #21262d; }
     th:first-child, td:first-child { text-align: left; }
     th { color: var(--muted); font-weight: 500; }
 
-    /* Ranking bar */
-    .rank-bar {
-      height: 6px;
-      background: #21262d;
-      border-radius: 3px;
-      margin-top: 0.35rem;
-      overflow: hidden;
-    }
+    .chart-box { position: relative; height: 280px; margin-top: 0.5rem; }
 
-    .rank-fill {
-      height: 100%;
-      border-radius: 3px;
-      background: linear-gradient(90deg, #1f6feb, #58a6ff);
+    .timeframe-bar {
+      display: flex; gap: 0.35rem; margin-bottom: 1rem;
     }
+    .tf-btn {
+      background: #21262d; border: 1px solid var(--border); color: var(--muted);
+      padding: 0.25rem 0.7rem; border-radius: 5px; font-size: 0.8rem; cursor: pointer;
+    }
+    .tf-btn.active { background: #1f6feb; border-color: #1f6feb; color: #fff; }
 
     .hidden { display: none; }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
+    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.8rem; }
   </style>
 </head>
 <body>
@@ -197,264 +123,469 @@
   </div>
 </header>
 
-<nav id="nav"></nav>
+<div class="top-nav" id="topNav"></div>
+
+<div class="analysis-tabs" id="analysisTabs">
+  <button class="tab-btn active" data-tab="ranking">1. Ranking</button>
+  <button class="tab-btn" data-tab="term">2. Term Structure</button>
+  <button class="tab-btn" data-tab="changes">3. Daily Changes</button>
+  <button class="tab-btn" data-tab="skew">4. Skew & Variance</button>
+  <button class="tab-btn" data-tab="proximity">5. Proximity %</button>
+  <button class="tab-btn" data-tab="convex">6. Convexity</button>
+  <button class="tab-btn" data-tab="relative">7. Relative Value</button>
+  <button class="tab-btn" data-tab="summary">8. Summary</button>
+  <button class="tab-btn" data-tab="regime">9. Regime / Movers</button>
+</div>
 
 <main>
-  <!-- Overview / Ranking -->
-  <div id="view-overview">
-    <div class="section-title">1M CVOL Ranking</div>
+  <!-- RANKING -->
+  <div id="tab-ranking">
+    <div class="section-title">
+      <span>1M CVOL Ranking (all assets)</span>
+      <div class="timeframe-bar" id="rankTf"></div>
+    </div>
     <div class="grid" id="rankingGrid"></div>
   </div>
 
-  <!-- Asset Class view -->
-  <div id="view-class" class="hidden">
-    <div class="section-title" id="classTitle"></div>
-    <div class="grid" id="classGrid"></div>
+  <!-- TERM STRUCTURE -->
+  <div id="tab-term" class="hidden">
+    <div class="section-title">Term Structure of Volatility</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Select Asset</h3>
+        <select id="termAssetSelect" style="width:100%;padding:0.4rem;background:#21262d;color:var(--text);border:1px solid var(--border);border-radius:6px;"></select>
+        <div class="chart-box"><canvas id="termChart"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>Term Structure Table</h3>
+        <div id="termTable"></div>
+      </div>
+    </div>
   </div>
 
-  <!-- Single Asset view -->
-  <div id="view-asset" class="hidden">
-    <div class="section-title" id="assetTitle"></div>
-    <div class="grid" id="assetGrid"></div>
+  <!-- DAILY CHANGES -->
+  <div id="tab-changes" class="hidden">
+    <div class="section-title">
+      <span>Daily / Multi-day Changes</span>
+      <div class="timeframe-bar" id="chgTf"></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>CVOL History</h3>
+        <select id="chgAssetSelect" style="width:100%;padding:0.4rem;background:#21262d;color:var(--text);border:1px solid var(--border);border-radius:6px;margin-bottom:0.6rem;"></select>
+        <div class="chart-box"><canvas id="chgChart"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>Biggest Movers (selected tenor)</h3>
+        <div id="moversTable"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKEW -->
+  <div id="tab-skew" class="hidden">
+    <div class="section-title">Skew & Asymmetry (DNVAR vs UPVAR)</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Select Asset</h3>
+        <select id="skewAssetSelect" style="width:100%;padding:0.4rem;background:#21262d;color:var(--text);border:1px solid var(--border);border-radius:6px;margin-bottom:0.6rem;"></select>
+        <div class="chart-box"><canvas id="skewChart"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>Skew Snapshot</h3>
+        <div id="skewTable"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROXIMITY -->
+  <div id="tab-proximity" class="hidden">
+    <div class="section-title">Range Positioning (Proximity %)</div>
+    <div class="grid" id="proxGrid"></div>
+  </div>
+
+  <!-- CONVEXITY -->
+  <div id="tab-convex" class="hidden">
+    <div class="section-title">Convexity</div>
+    <div class="grid" id="convexGrid"></div>
+  </div>
+
+  <!-- RELATIVE VALUE -->
+  <div id="tab-relative" class="hidden">
+    <div class="section-title">Cross-Asset Relative Value</div>
+    <div class="card">
+      <h3>1M CVOL Spreads (selected pairs)</h3>
+      <div id="relTable"></div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div id="tab-summary" class="hidden">
+    <div class="section-title">Full Snapshot by Asset Class</div>
+    <div id="summaryContent"></div>
+  </div>
+
+  <!-- REGIME -->
+  <div id="tab-regime" class="hidden">
+    <div class="section-title">Regime / Largest Recent Moves</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Largest Absolute CHG (1M)</h3>
+        <div id="regimeUp"></div>
+      </div>
+      <div class="card">
+        <h3>Assets Near Extremes</h3>
+        <div id="regimeExtreme"></div>
+      </div>
+    </div>
   </div>
 </main>
 
-<footer>
-  Futures CVOL · Data from CME · Powered by GitHub Pages
-</footer>
+<footer>Futures CVOL · CME data · GitHub Pages</footer>
 
 <script>
-  let DATA = null;
+let DATA = null;
+let termChart = null, chgChart = null, skewChart = null;
+let currentTf = '1M';
 
-  async function loadData() {
-    try {
-      const res = await fetch('data/cvol_data.json?t=' + Date.now());
-      if (!res.ok) throw new Error(res.status);
-      DATA = await res.json();
-      document.getElementById('asOf').textContent = DATA.as_of_date || '—';
-      document.getElementById('updated').textContent = (DATA.generated_at || '').replace('T', ' ').substring(0, 19) + 'Z';
-      buildNav();
-      showOverview();
-    } catch (e) {
-      document.getElementById('rankingGrid').innerHTML =
-        `<div class="card"><p style="color:var(--red)">Failed to load data/cvol_data.json<br>${e.message}</p></div>`;
+async function loadData() {
+  try {
+    const res = await fetch('data/cvol_data.json?t=' + Date.now());
+    DATA = await res.json();
+    document.getElementById('asOf').textContent = DATA.as_of_date || '—';
+    document.getElementById('updated').textContent = (DATA.generated_at || '').replace('T',' ').substring(0,19)+'Z';
+    buildTopNav();
+    fillSelects();
+    showTab('ranking');
+    renderRanking();
+  } catch(e) {
+    alert('Failed to load data/cvol_data.json\n' + e.message);
+  }
+}
+
+function buildTopNav() {
+  const nav = document.getElementById('topNav');
+  nav.innerHTML = '';
+  const ov = document.createElement('button');
+  ov.className = 'nav-btn active'; ov.textContent = 'All Assets';
+  ov.onclick = () => { document.querySelectorAll('.top-nav .nav-btn').forEach(b=>b.classList.remove('active')); ov.classList.add('active'); };
+  nav.appendChild(ov);
+
+  Object.keys(DATA.asset_classes).forEach(cls => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn class';
+    btn.textContent = cls;
+    btn.onclick = () => {
+      document.querySelectorAll('.top-nav .nav-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      // optional: filter later
+    };
+    nav.appendChild(btn);
+  });
+}
+
+function fillSelects() {
+  const names = DATA.assets.map(a => a.name);
+  ['termAssetSelect','chgAssetSelect','skewAssetSelect'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = names.map(n => `<option value="${n}">${n}</option>`).join('');
+    sel.onchange = () => {
+      if (id === 'termAssetSelect') renderTerm();
+      if (id === 'chgAssetSelect') renderChanges();
+      if (id === 'skewAssetSelect') renderSkew();
+    };
+  });
+}
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    showTab(btn.dataset.tab);
+  });
+});
+
+function showTab(name) {
+  ['ranking','term','changes','skew','proximity','convex','relative','summary','regime'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('hidden', t !== name);
+  });
+  if (name === 'ranking') renderRanking();
+  if (name === 'term') renderTerm();
+  if (name === 'changes') renderChanges();
+  if (name === 'skew') renderSkew();
+  if (name === 'proximity') renderProximity();
+  if (name === 'convex') renderConvex();
+  if (name === 'relative') renderRelative();
+  if (name === 'summary') renderSummary();
+  if (name === 'regime') renderRegime();
+}
+
+// ========== 1. RANKING ==========
+function renderRanking() {
+  const grid = document.getElementById('rankingGrid');
+  grid.innerHTML = '';
+  const max = Math.max(...DATA.ranking_1m.map(r => r.cvol || 0));
+  DATA.ranking_1m.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const chgC = r.chg > 0 ? 'up' : r.chg < 0 ? 'down' : '';
+    const proxB = r.proximity >= 0.85 ? 'high' : r.proximity <= 0.15 ? 'low' : 'mid';
+    const proxT = r.proximity >= 0.85 ? 'Near High' : r.proximity <= 0.15 ? 'Near Low' : 'Mid';
+    card.innerHTML = `
+      <h3>${r.name} <span class="badge ${proxB}">${proxT}</span></h3>
+      <div class="metric-row"><span class="metric-label">CVOL</span><span class="metric-value">${fmt(r.cvol)}</span></div>
+      <div class="metric-row"><span class="metric-label">CHG</span><span class="metric-value ${chgC}">${fmtChg(r.chg)}</span></div>
+      <div class="metric-row"><span class="metric-label">Proximity</span><span class="metric-value">${fmtPct(r.proximity)}</span></div>
+      <div class="metric-row"><span class="metric-label">Skew</span><span class="metric-value">${fmt(r.skew)}</span></div>
+      <div style="height:5px;background:#21262d;border-radius:3px;margin-top:0.4rem;overflow:hidden">
+        <div style="height:100%;width:${(r.cvol/max*100).toFixed(1)}%;background:linear-gradient(90deg,#1f6feb,#58a6ff)"></div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+// ========== 2. TERM STRUCTURE ==========
+function renderTerm() {
+  const name = document.getElementById('termAssetSelect').value;
+  const asset = DATA.assets.find(a => a.name === name);
+  if (!asset) return;
+
+  const ts = asset.term_structure || [];
+  const labels = ts.map(t => t.period);
+  const cvols = ts.map(t => t.cvol);
+
+  if (termChart) termChart.destroy();
+  termChart = new Chart(document.getElementById('termChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'CVOL',
+        data: cvols,
+        borderColor: '#58a6ff',
+        backgroundColor: '#58a6ff22',
+        fill: true,
+        tension: 0.25,
+        pointRadius: 5
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+        y: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } }
+      }
     }
-  }
+  });
 
-  function buildNav() {
-    const nav = document.getElementById('nav');
-    nav.innerHTML = '';
+  let html = `<table><thead><tr><th>Period</th><th>CVOL</th><th>CHG</th><th>Prox%</th><th>Skew</th><th>Convex</th></tr></thead><tbody>`;
+  ts.forEach(t => {
+    html += `<tr>
+      <td>${t.period||'—'}</td><td>${fmt(t.cvol)}</td>
+      <td class="${t.chg>0?'up':t.chg<0?'down':''}">${fmtChg(t.chg)}</td>
+      <td>${fmtPct(t.proximity)}</td><td>${fmt(t.skew)}</td><td>${fmt(t.convex)}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>`;
+  document.getElementById('termTable').innerHTML = html;
+}
 
-    // Overview button
-    const ov = document.createElement('button');
-    ov.className = 'nav-btn active';
-    ov.textContent = 'Overview';
-    ov.onclick = () => showOverview();
-    nav.appendChild(ov);
+// ========== 3. DAILY CHANGES ==========
+function renderChanges() {
+  const name = document.getElementById('chgAssetSelect').value;
+  const asset = DATA.assets.find(a => a.name === name);
+  if (!asset) return;
 
-    // Asset Class buttons
-    Object.keys(DATA.asset_classes).forEach(cls => {
-      const btn = document.createElement('button');
-      btn.className = 'nav-btn class-btn';
-      btn.textContent = cls;
-      btn.onclick = () => showClass(cls);
-      nav.appendChild(btn);
-    });
-  }
+  const hist = (asset.history_1m || []).slice().reverse(); // oldest → newest
+  const labels = hist.map(h => h.date);
+  const cvols = hist.map(h => h.cvol);
+  const chgs  = hist.map(h => h.chg);
 
-  function setActive(btnText) {
-    document.querySelectorAll('.nav-btn').forEach(b => {
-      b.classList.toggle('active', b.textContent === btnText);
-    });
-  }
+  if (chgChart) chgChart.destroy();
+  chgChart = new Chart(document.getElementById('chgChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'CVOL', data: cvols, borderColor: '#58a6ff', tension: 0.2, yAxisID: 'y' },
+        { label: 'CHG', data: chgs, borderColor: '#f85149', borderDash: [4,4], tension: 0.2, yAxisID: 'y1' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { ticks: { color: '#8b949e', maxTicksLimit: 8 }, grid: { color: '#21262d' } },
+        y: { position: 'left', ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+        y1: { position: 'right', ticks: { color: '#8b949e' }, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
 
-  function showOverview() {
-    setActive('Overview');
-    document.getElementById('view-overview').classList.remove('hidden');
-    document.getElementById('view-class').classList.add('hidden');
-    document.getElementById('view-asset').classList.add('hidden');
+  // Biggest movers across all assets (latest 1M chg)
+  const movers = DATA.ranking_1m.slice().sort((a,b) => Math.abs(b.chg||0) - Math.abs(a.chg||0)).slice(0,10);
+  let html = `<table><thead><tr><th>Asset</th><th>CVOL</th><th>CHG</th></tr></thead><tbody>`;
+  movers.forEach(m => {
+    html += `<tr><td>${m.name}</td><td>${fmt(m.cvol)}</td>
+      <td class="${m.chg>0?'up':'down'}">${fmtChg(m.chg)}</td></tr>`;
+  });
+  html += `</tbody></table>`;
+  document.getElementById('moversTable').innerHTML = html;
+}
 
-    const grid = document.getElementById('rankingGrid');
-    grid.innerHTML = '';
+// ========== 4. SKEW ==========
+function renderSkew() {
+  const name = document.getElementById('skewAssetSelect').value;
+  const asset = DATA.assets.find(a => a.name === name);
+  if (!asset) return;
 
-    const maxCvol = Math.max(...DATA.ranking_1m.map(r => r.cvol || 0));
+  const snap = asset.snapshot || [];
+  const labels = snap.map(s => s.period);
+  const dn = snap.map(s => s.dnvar);
+  const up = snap.map(s => s.upvar);
+  const sk = snap.map(s => s.skew);
 
-    DATA.ranking_1m.forEach(r => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.style.cursor = 'pointer';
-      card.onclick = () => showAsset(r.name);
+  if (skewChart) skewChart.destroy();
+  skewChart = new Chart(document.getElementById('skewChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'DNVAR', data: dn, backgroundColor: '#f8514988' },
+        { label: 'UPVAR', data: up, backgroundColor: '#3fb95088' },
+        { label: 'SKEW', data: sk, type: 'line', borderColor: '#a371f7', yAxisID: 'y1' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        x: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+        y: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+        y1: { position: 'right', ticks: { color: '#8b949e' }, grid: { drawOnChartArea: false } }
+      }
+    }
+  });
 
-      const chgClass = r.chg > 0 ? 'up' : r.chg < 0 ? 'down' : '';
-      const proxBadge = r.proximity >= 0.85 ? 'high' : r.proximity <= 0.15 ? 'low' : 'mid';
-      const proxText  = r.proximity >= 0.85 ? 'Near High' : r.proximity <= 0.15 ? 'Near Low' : 'Mid Range';
+  let html = `<table><thead><tr><th>Period</th><th>SKEW</th><th>DNVAR</th><th>UPVAR</th><th>SKEW^R</th></tr></thead><tbody>`;
+  snap.forEach(s => {
+    html += `<tr><td>${s.period}</td><td>${fmt(s.skew)}</td><td>${fmt(s.dnvar)}</td>
+      <td>${fmt(s.upvar)}</td><td>${fmt(s.skew_r)}</td></tr>`;
+  });
+  html += `</tbody></table>`;
+  document.getElementById('skewTable').innerHTML = html;
+}
 
-      card.innerHTML = `
-        <h3>
-          ${r.name}
-          <span class="badge ${proxBadge}">${proxText}</span>
-        </h3>
-        <div class="metric-row">
-          <span class="metric-label">1M CVOL</span>
-          <span class="metric-value">${fmt(r.cvol)}</span>
-        </div>
-        <div class="metric-row">
-          <span class="metric-label">Change</span>
-          <span class="metric-value ${chgClass}">${fmtChg(r.chg)}</span>
-        </div>
-        <div class="metric-row">
-          <span class="metric-label">Proximity %</span>
-          <span class="metric-value">${fmtPct(r.proximity)}</span>
-        </div>
-        <div class="metric-row">
-          <span class="metric-label">Skew</span>
-          <span class="metric-value">${fmt(r.skew)}</span>
-        </div>
-        <div class="rank-bar">
-          <div class="rank-fill" style="width:${(r.cvol / maxCvol * 100).toFixed(1)}%"></div>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
-  }
+// ========== 5. PROXIMITY ==========
+function renderProximity() {
+  const grid = document.getElementById('proxGrid');
+  grid.innerHTML = '';
+  DATA.ranking_1m.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const pct = (r.proximity || 0) * 100;
+    const color = pct >= 85 ? 'var(--green)' : pct <= 15 ? 'var(--red)' : 'var(--yellow)';
+    card.innerHTML = `
+      <h3>${r.name}</h3>
+      <div class="metric-row"><span class="metric-label">Proximity</span><span class="metric-value">${fmtPct(r.proximity)}</span></div>
+      <div style="height:8px;background:#21262d;border-radius:4px;margin-top:0.5rem;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${color}"></div>
+      </div>
+      <div style="font-size:0.78rem;color:var(--muted);margin-top:0.3rem">0% = Low of range · 100% = High of range</div>`;
+    grid.appendChild(card);
+  });
+}
 
-  function showClass(cls) {
-    setActive(cls);
-    document.getElementById('view-overview').classList.add('hidden');
-    document.getElementById('view-class').classList.remove('hidden');
-    document.getElementById('view-asset').classList.add('hidden');
+// ========== 6. CONVEXITY ==========
+function renderConvex() {
+  const grid = document.getElementById('convexGrid');
+  grid.innerHTML = '';
+  DATA.assets.forEach(a => {
+    const m1 = (a.snapshot || []).find(s => s.period === '1M') || {};
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h3>${a.name}</h3>
+      <div class="metric-row"><span class="metric-label">Convex (1M)</span><span class="metric-value">${fmt(m1.convex)}</span></div>
+      <div class="metric-row"><span class="metric-label">Convex Chg</span><span class="metric-value">${fmtChg(m1.convex_chg)}</span></div>`;
+    grid.appendChild(card);
+  });
+}
 
-    document.getElementById('classTitle').textContent = cls;
-    const grid = document.getElementById('classGrid');
-    grid.innerHTML = '';
+// ========== 7. RELATIVE VALUE ==========
+function renderRelative() {
+  const pairs = [
+    ['10Y Bond','2Y Bond'], ['10Y Bond','30Y Bond'],
+    ['Gold','Silver'], ['WTI CRUDE OIL','Heating Oil'],
+    ['WTI CRUDE OIL','NAT GAS'], ['AUDUSD','JPYUSD']
+  ];
+  let html = `<table><thead><tr><th>Pair</th><th>CVOL A</th><th>CVOL B</th><th>Spread</th><th>Ratio</th></tr></thead><tbody>`;
+  pairs.forEach(([a,b]) => {
+    const ra = DATA.ranking_1m.find(x => x.name === a);
+    const rb = DATA.ranking_1m.find(x => x.name === b);
+    if (!ra || !rb) return;
+    const spread = (ra.cvol || 0) - (rb.cvol || 0);
+    const ratio = rb.cvol ? (ra.cvol / rb.cvol) : null;
+    html += `<tr><td>${a} – ${b}</td><td>${fmt(ra.cvol)}</td><td>${fmt(rb.cvol)}</td>
+      <td class="${spread>0?'up':'down'}">${fmtChg(spread)}</td><td>${ratio?ratio.toFixed(2):'—'}</td></tr>`;
+  });
+  html += `</tbody></table>`;
+  document.getElementById('relTable').innerHTML = html;
+}
 
-    const assets = DATA.asset_classes[cls] || [];
+// ========== 8. SUMMARY ==========
+function renderSummary() {
+  const cont = document.getElementById('summaryContent');
+  cont.innerHTML = '';
+  Object.entries(DATA.asset_classes).forEach(([cls, assets]) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.marginBottom = '1rem';
+    let rows = '';
     assets.forEach(a => {
       const s = a.summary || {};
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.style.cursor = 'pointer';
-      card.onclick = () => showAsset(a.name);
-
-      const chgClass = s.latest_chg > 0 ? 'up' : s.latest_chg < 0 ? 'down' : '';
-
-      card.innerHTML = `
-        <h3>${a.name}</h3>
-        <div class="metric-row">
-          <span class="metric-label">1M CVOL</span>
-          <span class="metric-value">${fmt(s.latest_cvol)}</span>
-        </div>
-        <div class="metric-row">
-          <span class="metric-label">Change</span>
-          <span class="metric-value ${chgClass}">${fmtChg(s.latest_chg)}</span>
-        </div>
-        <div class="metric-row">
-          <span class="metric-label">Proximity</span>
-          <span class="metric-value">${fmtPct(s.proximity_1m)}</span>
-        </div>
-        <div class="metric-row">
-          <span class="metric-label">Skew</span>
-          <span class="metric-value">${fmt(s.skew_1m)}</span>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
-  }
-
-  function showAsset(name) {
-    const asset = DATA.assets.find(a => a.name === name);
-    if (!asset) return;
-
-    document.getElementById('view-overview').classList.add('hidden');
-    document.getElementById('view-class').classList.add('hidden');
-    document.getElementById('view-asset').classList.remove('hidden');
-
-    document.getElementById('assetTitle').textContent = name;
-    const grid = document.getElementById('assetGrid');
-    grid.innerHTML = '';
-
-    // Summary card
-    const s = asset.summary || {};
-    const summaryCard = document.createElement('div');
-    summaryCard.className = 'card';
-    summaryCard.innerHTML = `
-      <h3>Latest Snapshot (1M)</h3>
-      <div class="metric-row"><span class="metric-label">CVOL</span><span class="metric-value">${fmt(s.latest_cvol)}</span></div>
-      <div class="metric-row"><span class="metric-label">Change</span><span class="metric-value ${s.latest_chg > 0 ? 'up' : 'down'}">${fmtChg(s.latest_chg)}</span></div>
-      <div class="metric-row"><span class="metric-label">Proximity %</span><span class="metric-value">${fmtPct(s.proximity_1m)}</span></div>
-      <div class="metric-row"><span class="metric-label">Skew</span><span class="metric-value">${fmt(s.skew_1m)}</span></div>
-      <div class="metric-row"><span class="metric-label">Convexity</span><span class="metric-value">${fmt(s.convex_1m)}</span></div>
-    `;
-    grid.appendChild(summaryCard);
-
-    // Term Structure card
-    const tsCard = document.createElement('div');
-    tsCard.className = 'card';
-    let rows = '';
-    (asset.term_structure || []).forEach(t => {
       rows += `<tr>
-        <td>${t.period || '—'}</td>
-        <td>${fmt(t.cvol)}</td>
-        <td class="${t.chg > 0 ? 'up' : t.chg < 0 ? 'down' : ''}">${fmtChg(t.chg)}</td>
-        <td>${fmtPct(t.proximity)}</td>
-        <td>${fmt(t.skew)}</td>
-        <td>${fmt(t.convex)}</td>
+        <td>${a.name}</td><td>${fmt(s.latest_cvol)}</td>
+        <td class="${s.latest_chg>0?'up':'down'}">${fmtChg(s.latest_chg)}</td>
+        <td>${fmtPct(s.proximity_1m)}</td><td>${fmt(s.skew_1m)}</td><td>${fmt(s.convex_1m)}</td>
       </tr>`;
     });
-    tsCard.innerHTML = `
-      <h3>Term Structure</h3>
+    card.innerHTML = `
+      <h3>${cls}</h3>
       <table>
-        <thead>
-          <tr><th>Period</th><th>CVOL</th><th>CHG</th><th>Prox %</th><th>Skew</th><th>Convex</th></tr>
-        </thead>
+        <thead><tr><th>Asset</th><th>CVOL</th><th>CHG</th><th>Prox%</th><th>Skew</th><th>Convex</th></tr></thead>
         <tbody>${rows}</tbody>
-      </table>
-    `;
-    grid.appendChild(tsCard);
+      </table>`;
+    cont.appendChild(card);
+  });
+}
 
-    // Full Snapshot card
-    const snapCard = document.createElement('div');
-    snapCard.className = 'card';
-    let snapRows = '';
-    (asset.snapshot || []).forEach(t => {
-      snapRows += `<tr>
-        <td>${t.period}</td>
-        <td>${fmt(t.cvol)}</td>
-        <td>${fmt(t.dnvar)}</td>
-        <td>${fmt(t.upvar)}</td>
-        <td>${fmt(t.skew)}</td>
-        <td>${fmt(t.skew_r)}</td>
-        <td>${fmt(t.convex)}</td>
-      </tr>`;
-    });
-    snapCard.innerHTML = `
-      <h3>Full Snapshot (all tenors)</h3>
-      <table>
-        <thead>
-          <tr><th>Period</th><th>CVOL</th><th>DNVAR</th><th>UPVAR</th><th>Skew</th><th>Skew^R</th><th>Convex</th></tr>
-        </thead>
-        <tbody>${snapRows}</tbody>
-      </table>
-    `;
-    grid.appendChild(snapCard);
-  }
+// ========== 9. REGIME / MOVERS ==========
+function renderRegime() {
+  const sorted = DATA.ranking_1m.slice().sort((a,b) => Math.abs(b.chg||0) - Math.abs(a.chg||0));
+  let html = `<table><thead><tr><th>Asset</th><th>CHG</th><th>CVOL</th></tr></thead><tbody>`;
+  sorted.slice(0,8).forEach(m => {
+    html += `<tr><td>${m.name}</td><td class="${m.chg>0?'up':'down'}">${fmtChg(m.chg)}</td><td>${fmt(m.cvol)}</td></tr>`;
+  });
+  html += `</tbody></table>`;
+  document.getElementById('regimeUp').innerHTML = html;
 
-  // Helpers
-  function fmt(v) {
-    if (v === null || v === undefined) return '—';
-    return Number(v).toFixed(2);
-  }
-  function fmtChg(v) {
-    if (v === null || v === undefined) return '—';
-    const n = Number(v);
-    return (n > 0 ? '+' : '') + n.toFixed(2);
-  }
-  function fmtPct(v) {
-    if (v === null || v === undefined) return '—';
-    return (Number(v) * 100).toFixed(1) + '%';
-  }
+  const extremes = DATA.ranking_1m.filter(r => r.proximity >= 0.85 || r.proximity <= 0.15);
+  let html2 = `<table><thead><tr><th>Asset</th><th>Proximity</th><th>Flag</th></tr></thead><tbody>`;
+  extremes.forEach(e => {
+    const flag = e.proximity >= 0.85 ? 'Near High' : 'Near Low';
+    html2 += `<tr><td>${e.name}</td><td>${fmtPct(e.proximity)}</td><td>${flag}</td></tr>`;
+  });
+  html2 += `</tbody></table>`;
+  document.getElementById('regimeExtreme').innerHTML = html2;
+}
 
-  loadData();
+// Helpers
+function fmt(v){ return v==null?'—':Number(v).toFixed(2); }
+function fmtChg(v){ if(v==null)return'—'; const n=Number(v); return (n>0?'+':'')+n.toFixed(2); }
+function fmtPct(v){ return v==null?'—':(Number(v)*100).toFixed(1)+'%'; }
+
+loadData();
 </script>
 </body>
 </html>
