@@ -1,1 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Futures CVOL Dashboard</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --red: #f85149;
+      --yellow: #d29922;
+      --purple: #a371f7;
+    }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: #010409;
+    }
+
+    header h1 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .meta span { color: var(--accent); }
+
+    /* Navigation */
+    nav {
+      padding: 1rem 2rem 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      background: #010409;
+    }
+
+    .nav-btn {
+      background: #21262d;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-btn.active {
+      background: #1f6feb;
+      border-color: #1f6feb;
+      color: #fff;
+    }
+
+    .nav-btn.class-btn {
+      background: #0d419d;
+      border-color: #1f6feb;
+    }
+
+    /* Main content */
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.75rem 2rem 3rem;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    .badge.high { background: #23863633; color: var(--green); }
+    .badge.low  { background: #da363333; color: var(--red); }
+    .badge.mid  { background: #9e6a0333; color: var(--yellow); }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.35rem 0;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #21262d;
+    }
+
+    .metric-row:last-child { border-bottom: none; }
+
+    .metric-label { color: var(--muted); }
+    .metric-value { font-weight: 500; }
+
+    .up   { color: var(--green); }
+    .down { color: var(--red); }
+
+    /* Term structure table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-top: 0.5rem;
+    }
+
+    th, td {
+      padding: 0.4rem 0.6rem;
+      text-align: right;
+      border-bottom: 1px solid #21262d;
+    }
+
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--muted); font-weight: 500; }
+
+    /* Ranking bar */
+    .rank-bar {
+      height: 6px;
+      background: #21262d;
+      border-radius: 3px;
+      margin-top: 0.35rem;
+      overflow: hidden;
+    }
+
+    .rank-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #1f6feb, #58a6ff);
+    }
+
+    .hidden { display: none; }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>FUTURES CVOL DASHBOARD</h1>
+  <div class="meta">
+    Data as of <span id="asOf">—</span> · Updated <span id="updated">—</span>
+  </div>
+</header>
+
+<nav id="nav"></nav>
+
+<main>
+  <!-- Overview / Ranking -->
+  <div id="view-overview">
+    <div class="section-title">1M CVOL Ranking</div>
+    <div class="grid" id="rankingGrid"></div>
+  </div>
+
+  <!-- Asset Class view -->
+  <div id="view-class" class="hidden">
+    <div class="section-title" id="classTitle"></div>
+    <div class="grid" id="classGrid"></div>
+  </div>
+
+  <!-- Single Asset view -->
+  <div id="view-asset" class="hidden">
+    <div class="section-title" id="assetTitle"></div>
+    <div class="grid" id="assetGrid"></div>
+  </div>
+</main>
+
+<footer>
+  Futures CVOL · Data from CME · Powered by GitHub Pages
+</footer>
+
+<script>
+  let DATA = null;
+
+  async function loadData() {
+    try {
+      const res = await fetch('data/cvol_data.json?t=' + Date.now());
+      if (!res.ok) throw new Error(res.status);
+      DATA = await res.json();
+      document.getElementById('asOf').textContent = DATA.as_of_date || '—';
+      document.getElementById('updated').textContent = (DATA.generated_at || '').replace('T', ' ').substring(0, 19) + 'Z';
+      buildNav();
+      showOverview();
+    } catch (e) {
+      document.getElementById('rankingGrid').innerHTML =
+        `<div class="card"><p style="color:var(--red)">Failed to load data/cvol_data.json<br>${e.message}</p></div>`;
+    }
+  }
+
+  function buildNav() {
+    const nav = document.getElementById('nav');
+    nav.innerHTML = '';
+
+    // Overview button
+    const ov = document.createElement('button');
+    ov.className = 'nav-btn active';
+    ov.textContent = 'Overview';
+    ov.onclick = () => showOverview();
+    nav.appendChild(ov);
+
+    // Asset Class buttons
+    Object.keys(DATA.asset_classes).forEach(cls => {
+      const btn = document.createElement('button');
+      btn.className = 'nav-btn class-btn';
+      btn.textContent = cls;
+      btn.onclick = () => showClass(cls);
+      nav.appendChild(btn);
+    });
+  }
+
+  function setActive(btnText) {
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      b.classList.toggle('active', b.textContent === btnText);
+    });
+  }
+
+  function showOverview() {
+    setActive('Overview');
+    document.getElementById('view-overview').classList.remove('hidden');
+    document.getElementById('view-class').classList.add('hidden');
+    document.getElementById('view-asset').classList.add('hidden');
+
+    const grid = document.getElementById('rankingGrid');
+    grid.innerHTML = '';
+
+    const maxCvol = Math.max(...DATA.ranking_1m.map(r => r.cvol || 0));
+
+    DATA.ranking_1m.forEach(r => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.cursor = 'pointer';
+      card.onclick = () => showAsset(r.name);
+
+      const chgClass = r.chg > 0 ? 'up' : r.chg < 0 ? 'down' : '';
+      const proxBadge = r.proximity >= 0.85 ? 'high' : r.proximity <= 0.15 ? 'low' : 'mid';
+      const proxText  = r.proximity >= 0.85 ? 'Near High' : r.proximity <= 0.15 ? 'Near Low' : 'Mid Range';
+
+      card.innerHTML = `
+        <h3>
+          ${r.name}
+          <span class="badge ${proxBadge}">${proxText}</span>
+        </h3>
+        <div class="metric-row">
+          <span class="metric-label">1M CVOL</span>
+          <span class="metric-value">${fmt(r.cvol)}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Change</span>
+          <span class="metric-value ${chgClass}">${fmtChg(r.chg)}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Proximity %</span>
+          <span class="metric-value">${fmtPct(r.proximity)}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Skew</span>
+          <span class="metric-value">${fmt(r.skew)}</span>
+        </div>
+        <div class="rank-bar">
+          <div class="rank-fill" style="width:${(r.cvol / maxCvol * 100).toFixed(1)}%"></div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function showClass(cls) {
+    setActive(cls);
+    document.getElementById('view-overview').classList.add('hidden');
+    document.getElementById('view-class').classList.remove('hidden');
+    document.getElementById('view-asset').classList.add('hidden');
+
+    document.getElementById('classTitle').textContent = cls;
+    const grid = document.getElementById('classGrid');
+    grid.innerHTML = '';
+
+    const assets = DATA.asset_classes[cls] || [];
+    assets.forEach(a => {
+      const s = a.summary || {};
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.cursor = 'pointer';
+      card.onclick = () => showAsset(a.name);
+
+      const chgClass = s.latest_chg > 0 ? 'up' : s.latest_chg < 0 ? 'down' : '';
+
+      card.innerHTML = `
+        <h3>${a.name}</h3>
+        <div class="metric-row">
+          <span class="metric-label">1M CVOL</span>
+          <span class="metric-value">${fmt(s.latest_cvol)}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Change</span>
+          <span class="metric-value ${chgClass}">${fmtChg(s.latest_chg)}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Proximity</span>
+          <span class="metric-value">${fmtPct(s.proximity_1m)}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Skew</span>
+          <span class="metric-value">${fmt(s.skew_1m)}</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function showAsset(name) {
+    const asset = DATA.assets.find(a => a.name === name);
+    if (!asset) return;
+
+    document.getElementById('view-overview').classList.add('hidden');
+    document.getElementById('view-class').classList.add('hidden');
+    document.getElementById('view-asset').classList.remove('hidden');
+
+    document.getElementById('assetTitle').textContent = name;
+    const grid = document.getElementById('assetGrid');
+    grid.innerHTML = '';
+
+    // Summary card
+    const s = asset.summary || {};
+    const summaryCard = document.createElement('div');
+    summaryCard.className = 'card';
+    summaryCard.innerHTML = `
+      <h3>Latest Snapshot (1M)</h3>
+      <div class="metric-row"><span class="metric-label">CVOL</span><span class="metric-value">${fmt(s.latest_cvol)}</span></div>
+      <div class="metric-row"><span class="metric-label">Change</span><span class="metric-value ${s.latest_chg > 0 ? 'up' : 'down'}">${fmtChg(s.latest_chg)}</span></div>
+      <div class="metric-row"><span class="metric-label">Proximity %</span><span class="metric-value">${fmtPct(s.proximity_1m)}</span></div>
+      <div class="metric-row"><span class="metric-label">Skew</span><span class="metric-value">${fmt(s.skew_1m)}</span></div>
+      <div class="metric-row"><span class="metric-label">Convexity</span><span class="metric-value">${fmt(s.convex_1m)}</span></div>
+    `;
+    grid.appendChild(summaryCard);
+
+    // Term Structure card
+    const tsCard = document.createElement('div');
+    tsCard.className = 'card';
+    let rows = '';
+    (asset.term_structure || []).forEach(t => {
+      rows += `<tr>
+        <td>${t.period || '—'}</td>
+        <td>${fmt(t.cvol)}</td>
+        <td class="${t.chg > 0 ? 'up' : t.chg < 0 ? 'down' : ''}">${fmtChg(t.chg)}</td>
+        <td>${fmtPct(t.proximity)}</td>
+        <td>${fmt(t.skew)}</td>
+        <td>${fmt(t.convex)}</td>
+      </tr>`;
+    });
+    tsCard.innerHTML = `
+      <h3>Term Structure</h3>
+      <table>
+        <thead>
+          <tr><th>Period</th><th>CVOL</th><th>CHG</th><th>Prox %</th><th>Skew</th><th>Convex</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+    grid.appendChild(tsCard);
+
+    // Full Snapshot card
+    const snapCard = document.createElement('div');
+    snapCard.className = 'card';
+    let snapRows = '';
+    (asset.snapshot || []).forEach(t => {
+      snapRows += `<tr>
+        <td>${t.period}</td>
+        <td>${fmt(t.cvol)}</td>
+        <td>${fmt(t.dnvar)}</td>
+        <td>${fmt(t.upvar)}</td>
+        <td>${fmt(t.skew)}</td>
+        <td>${fmt(t.skew_r)}</td>
+        <td>${fmt(t.convex)}</td>
+      </tr>`;
+    });
+    snapCard.innerHTML = `
+      <h3>Full Snapshot (all tenors)</h3>
+      <table>
+        <thead>
+          <tr><th>Period</th><th>CVOL</th><th>DNVAR</th><th>UPVAR</th><th>Skew</th><th>Skew^R</th><th>Convex</th></tr>
+        </thead>
+        <tbody>${snapRows}</tbody>
+      </table>
+    `;
+    grid.appendChild(snapCard);
+  }
+
+  // Helpers
+  function fmt(v) {
+    if (v === null || v === undefined) return '—';
+    return Number(v).toFixed(2);
+  }
+  function fmtChg(v) {
+    if (v === null || v === undefined) return '—';
+    const n = Number(v);
+    return (n > 0 ? '+' : '') + n.toFixed(2);
+  }
+  function fmtPct(v) {
+    if (v === null || v === undefined) return '—';
+    return (Number(v) * 100).toFixed(1) + '%';
+  }
+
+  loadData();
+</script>
+</body>
+</html>
