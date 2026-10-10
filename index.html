@@ -34,7 +34,6 @@
     .meta { font-size: 0.85rem; color: var(--muted); }
     .meta span { color: var(--accent); }
 
-    /* Class navigation */
     .class-nav {
       padding: 0.9rem 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem;
       border-bottom: 1px solid var(--border); background: #010409;
@@ -46,6 +45,7 @@
     }
     .class-btn:hover { border-color: var(--accent); color: var(--accent); }
     .class-btn.active { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+    .class-btn.overview { background: #238636; border-color: #2ea043; }
 
     main { max-width: 1280px; margin: 0 auto; padding: 1.5rem 2rem 3rem; }
 
@@ -78,7 +78,6 @@
     .badge.high { background: #23863633; color: var(--green); }
     .badge.low  { background: #da363333; color: var(--red); }
     .badge.mid  { background: #9e6a0333; color: var(--yellow); }
-    .badge.signal { background: #1f6feb33; color: var(--accent); }
 
     .metric-row {
       display: flex; justify-content: space-between; padding: 0.3rem 0;
@@ -119,28 +118,54 @@
 <div class="class-nav" id="classNav"></div>
 
 <main>
-  <!-- CLASS VIEW -->
+  <!-- ==================== MARKET OVERVIEW (Cross-Asset) ==================== -->
+  <div id="view-overview" class="hidden">
+    <div class="section-title">Market Overview — Cross-Asset Analysis</div>
+
+    <!-- Ranking -->
+    <div class="section-title" style="font-size:1.05rem;margin-top:1.5rem">1. Full Ranking by 1M CVOL</div>
+    <div class="grid" id="overviewRanking"></div>
+
+    <!-- Relative Value -->
+    <div class="section-title" style="font-size:1.05rem;margin-top:2rem">2. Cross-Asset Relative Value</div>
+    <div class="card" style="margin-bottom:1.5rem">
+      <div id="relTable"></div>
+    </div>
+
+    <!-- Regime / Movers -->
+    <div class="section-title" style="font-size:1.05rem;margin-top:1.5rem">3. Regime & Biggest Movers</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Largest Absolute Daily Moves</h3>
+        <div id="moversTable"></div>
+      </div>
+      <div class="card">
+        <h3>Assets at Extremes (Proximity)</h3>
+        <div id="extremesTable"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CLASS VIEW ==================== -->
   <div id="view-class">
     <div class="breadcrumb">Asset Classes</div>
     <div class="section-title" id="classTitle">Select an Asset Class</div>
     <div class="grid" id="classGrid"></div>
   </div>
 
-  <!-- ASSET DEEP DIVE -->
+  <!-- ==================== ASSET DEEP DIVE (unchanged) ==================== -->
   <div id="view-asset" class="hidden">
     <div class="breadcrumb">
       <span onclick="showClassView(currentClass)">← Back to <span id="backClass"></span></span>
       &nbsp;/&nbsp; <span id="assetName"></span>
     </div>
 
-    <!-- 1. Snapshot + Signals -->
     <div class="section-title">1. Latest Snapshot & Signals</div>
     <div class="grid-2" style="margin-bottom:1.5rem">
       <div class="card" id="snapshotCard"></div>
       <div class="card" id="signalsCard"></div>
     </div>
 
-    <!-- 2. Term Structure -->
     <div class="section-title">2. Term Structure of Volatility</div>
     <div class="grid-2" style="margin-bottom:1.5rem">
       <div class="card">
@@ -153,7 +178,6 @@
       </div>
     </div>
 
-    <!-- 3. Daily Changes -->
     <div class="section-title">3. Daily / Multi-day Changes</div>
     <div class="grid-2" style="margin-bottom:1.5rem">
       <div class="card">
@@ -163,7 +187,6 @@
       <div class="card" id="chgSignalCard"></div>
     </div>
 
-    <!-- 4. Skew -->
     <div class="section-title">4. Skew & Variance Asymmetry</div>
     <div class="grid-2" style="margin-bottom:1.5rem">
       <div class="card">
@@ -173,15 +196,12 @@
       <div class="card" id="skewSignalCard"></div>
     </div>
 
-    <!-- 5. Proximity -->
     <div class="section-title">5. Range Positioning (Proximity %)</div>
     <div class="card" style="margin-bottom:1.5rem" id="proxCard"></div>
 
-    <!-- 6. Convexity -->
     <div class="section-title">6. Convexity</div>
     <div class="card" style="margin-bottom:1.5rem" id="convexCard"></div>
 
-    <!-- 7+8. Full Snapshot -->
     <div class="section-title">7. Full Snapshot (all tenors)</div>
     <div class="card" style="margin-bottom:1.5rem" id="fullSnapCard"></div>
   </div>
@@ -192,7 +212,6 @@
 <script>
 let DATA = null;
 let currentClass = null;
-let currentAsset = null;
 let termChart = null, chgChart = null, skewChart = null;
 
 async function loadData() {
@@ -202,7 +221,7 @@ async function loadData() {
     document.getElementById('asOf').textContent = DATA.as_of_date || '—';
     document.getElementById('updated').textContent = (DATA.generated_at || '').replace('T',' ').substring(0,19)+'Z';
     buildClassNav();
-    showClassView(Object.keys(DATA.asset_classes)[0]); // default first class
+    showClassView(Object.keys(DATA.asset_classes)[0]);
   } catch(e) {
     alert('Failed to load data/cvol_data.json\n' + e.message);
   }
@@ -211,6 +230,14 @@ async function loadData() {
 function buildClassNav() {
   const nav = document.getElementById('classNav');
   nav.innerHTML = '';
+
+  // Market Overview button
+  const ov = document.createElement('button');
+  ov.className = 'class-btn overview';
+  ov.textContent = 'Market Overview';
+  ov.onclick = showOverview;
+  nav.appendChild(ov);
+
   Object.keys(DATA.asset_classes).forEach(cls => {
     const btn = document.createElement('button');
     btn.className = 'class-btn';
@@ -220,12 +247,27 @@ function buildClassNav() {
   });
 }
 
+function showOverview() {
+  document.querySelectorAll('.class-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.class-btn.overview').classList.add('active');
+
+  document.getElementById('view-overview').classList.remove('hidden');
+  document.getElementById('view-class').classList.add('hidden');
+  document.getElementById('view-asset').classList.add('hidden');
+
+  renderOverviewRanking();
+  renderRelative();
+  renderMovers();
+  renderExtremes();
+}
+
 function showClassView(cls) {
   currentClass = cls;
   document.querySelectorAll('.class-btn').forEach(b => {
     b.classList.toggle('active', b.textContent === cls);
   });
 
+  document.getElementById('view-overview').classList.add('hidden');
   document.getElementById('view-class').classList.remove('hidden');
   document.getElementById('view-asset').classList.add('hidden');
 
@@ -233,8 +275,7 @@ function showClassView(cls) {
   const grid = document.getElementById('classGrid');
   grid.innerHTML = '';
 
-  const assets = DATA.asset_classes[cls] || [];
-  assets.forEach(a => {
+  (DATA.asset_classes[cls] || []).forEach(a => {
     const s = a.summary || {};
     const card = document.createElement('div');
     card.className = 'card clickable';
@@ -256,10 +297,10 @@ function showClassView(cls) {
 }
 
 function showAsset(name) {
-  currentAsset = name;
   const asset = DATA.assets.find(a => a.name === name);
   if (!asset) return;
 
+  document.getElementById('view-overview').classList.add('hidden');
   document.getElementById('view-class').classList.add('hidden');
   document.getElementById('view-asset').classList.remove('hidden');
   document.getElementById('backClass').textContent = currentClass;
@@ -275,7 +316,97 @@ function showAsset(name) {
   renderFullSnap(asset);
 }
 
-// ========== 1. Snapshot ==========
+/* ===================== CROSS-ASSET SECTIONS ===================== */
+
+function renderOverviewRanking() {
+  const grid = document.getElementById('overviewRanking');
+  grid.innerHTML = '';
+  const max = Math.max(...DATA.ranking_1m.map(r => r.cvol || 0));
+
+  DATA.ranking_1m.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'card clickable';
+    card.onclick = () => {
+      // find which class this asset belongs to
+      for (const [cls, list] of Object.entries(DATA.asset_classes)) {
+        if (list.find(a => a.name === r.name)) {
+          currentClass = cls;
+          showAsset(r.name);
+          break;
+        }
+      }
+    };
+
+    const chgC = r.chg > 0 ? 'up' : r.chg < 0 ? 'down' : '';
+    const proxB = r.proximity >= 0.85 ? 'high' : r.proximity <= 0.15 ? 'low' : 'mid';
+    const proxT = r.proximity >= 0.85 ? 'Near High' : r.proximity <= 0.15 ? 'Near Low' : 'Mid';
+
+    card.innerHTML = `
+      <h3>${r.name} <span class="badge ${proxB}">${proxT}</span></h3>
+      <div class="metric-row"><span class="metric-label">CVOL</span><span class="metric-value">${fmt(r.cvol)}</span></div>
+      <div class="metric-row"><span class="metric-label">CHG</span><span class="metric-value ${chgC}">${fmtChg(r.chg)}</span></div>
+      <div class="metric-row"><span class="metric-label">Proximity</span><span class="metric-value">${fmtPct(r.proximity)}</span></div>
+      <div style="height:5px;background:#21262d;border-radius:3px;margin-top:0.4rem;overflow:hidden">
+        <div style="height:100%;width:${(r.cvol/max*100).toFixed(1)}%;background:linear-gradient(90deg,#1f6feb,#58a6ff)"></div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderRelative() {
+  const pairs = [
+    ['10Y Bond','2Y Bond'], ['10Y Bond','30Y Bond'], ['2Y Bond','30Y Bond'],
+    ['Gold','Silver'], ['Gold','Copper'],
+    ['WTI CRUDE OIL','Heating Oil'], ['WTI CRUDE OIL','NAT GAS'],
+    ['AUDUSD','JPYUSD'], ['EURUSD','GBPUSD']
+  ];
+
+  let html = `<table><thead><tr><th>Pair</th><th>CVOL A</th><th>CVOL B</th><th>Spread</th><th>Ratio</th></tr></thead><tbody>`;
+  pairs.forEach(([a,b]) => {
+    const ra = DATA.ranking_1m.find(x => x.name === a);
+    const rb = DATA.ranking_1m.find(x => x.name === b);
+    if (!ra || !rb) return;
+    const spread = (ra.cvol||0) - (rb.cvol||0);
+    const ratio = rb.cvol ? (ra.cvol / rb.cvol) : null;
+    html += `<tr>
+      <td>${a} – ${b}</td>
+      <td>${fmt(ra.cvol)}</td><td>${fmt(rb.cvol)}</td>
+      <td class="${spread>0?'up':'down'}">${fmtChg(spread)}</td>
+      <td>${ratio ? ratio.toFixed(2) : '—'}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>`;
+  document.getElementById('relTable').innerHTML = html;
+}
+
+function renderMovers() {
+  const sorted = DATA.ranking_1m.slice().sort((a,b) => Math.abs(b.chg||0) - Math.abs(a.chg||0));
+  let html = `<table><thead><tr><th>Asset</th><th>CHG</th><th>CVOL</th></tr></thead><tbody>`;
+  sorted.slice(0,10).forEach(m => {
+    html += `<tr>
+      <td>${m.name}</td>
+      <td class="${m.chg>0?'up':'down'}">${fmtChg(m.chg)}</td>
+      <td>${fmt(m.cvol)}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>`;
+  document.getElementById('moversTable').innerHTML = html;
+}
+
+function renderExtremes() {
+  const extremes = DATA.ranking_1m.filter(r => r.proximity >= 0.85 || r.proximity <= 0.15);
+  let html = `<table><thead><tr><th>Asset</th><th>Proximity</th><th>Flag</th></tr></thead><tbody>`;
+  extremes.forEach(e => {
+    const flag = e.proximity >= 0.85 ? 'Near High' : 'Near Low';
+    html += `<tr><td>${e.name}</td><td>${fmtPct(e.proximity)}</td><td>${flag}</td></tr>`;
+  });
+  if (extremes.length === 0) html += `<tr><td colspan="3">No assets at extremes right now</td></tr>`;
+  html += `</tbody></table>`;
+  document.getElementById('extremesTable').innerHTML = html;
+}
+
+/* ===================== SINGLE ASSET (same as before) ===================== */
+
 function renderSnapshot(asset) {
   const s = asset.summary || {};
   const m1 = (asset.snapshot || []).find(x => x.period === '1M') || {};
@@ -291,52 +422,38 @@ function renderSnapshot(asset) {
   `;
 }
 
-// ========== Signals (interpretive) ==========
 function renderSignals(asset) {
   const s = asset.summary || {};
   const hist = asset.history_1m || [];
   const signals = [];
 
-  // Proximity / Mean reversion
-  if (s.proximity_1m >= 0.90) {
+  if (s.proximity_1m >= 0.90)
     signals.push(`<strong>Mean-reversion bias (High)</strong> — CVOL is in the top 10% of its recent range. Elevated probability of vol compression.`);
-  } else if (s.proximity_1m <= 0.10) {
+  else if (s.proximity_1m <= 0.10)
     signals.push(`<strong>Mean-reversion bias (Low)</strong> — CVOL is in the bottom 10% of its recent range. Elevated probability of vol expansion.`);
-  } else if (s.proximity_1m >= 0.75) {
-    signals.push(`<strong>Approaching high</strong> — CVOL is elevated vs recent range. Watch for rejection.`);
-  } else if (s.proximity_1m <= 0.25) {
-    signals.push(`<strong>Approaching low</strong> — CVOL is depressed vs recent range. Watch for expansion.`);
-  }
+  else if (s.proximity_1m >= 0.75)
+    signals.push(`<strong>Approaching high</strong> — Watch for rejection.`);
+  else if (s.proximity_1m <= 0.25)
+    signals.push(`<strong>Approaching low</strong> — Watch for expansion.`);
 
-  // Volatility spike / crush
   const absChg = Math.abs(s.latest_chg || 0);
-  if (absChg >= 8) {
-    signals.push(`<strong>Volatility Spike / Crash</strong> — Daily change of ${fmtChg(s.latest_chg)} is extreme. Regime shift likely in progress.`);
-  } else if (absChg >= 4) {
-    signals.push(`<strong>Elevated daily move</strong> — Change of ${fmtChg(s.latest_chg)} is significant. Momentum may continue short-term.`);
-  }
+  if (absChg >= 8)
+    signals.push(`<strong>Volatility Spike / Crash</strong> — Daily change of ${fmtChg(s.latest_chg)} is extreme.`);
+  else if (absChg >= 4)
+    signals.push(`<strong>Elevated daily move</strong> — Change of ${fmtChg(s.latest_chg)} is significant.`);
 
-  // Skew
-  if (s.skew_1m > 10) {
-    signals.push(`<strong>Strong positive skew</strong> — Market is pricing higher upside variance (or downside protection is cheap).`);
-  } else if (s.skew_1m < -5) {
-    signals.push(`<strong>Negative skew</strong> — Downside protection is relatively expensive.`);
-  }
+  if (s.skew_1m > 10)
+    signals.push(`<strong>Strong positive skew</strong> — Upside variance dominant or downside cheap.`);
+  else if (s.skew_1m < -5)
+    signals.push(`<strong>Negative skew</strong> — Downside protection relatively expensive.`);
 
-  // Multi-day context
   if (hist.length >= 3) {
-    const last3 = hist.slice(-3).map(h => h.chg || 0);
-    const sum3 = last3.reduce((a,b)=>a+b,0);
-    if (sum3 <= -15) {
-      signals.push(`<strong>3-day vol crush</strong> — Cumulative change ${fmtChg(sum3)}. Vol has fallen sharply.`);
-    } else if (sum3 >= 12) {
-      signals.push(`<strong>3-day vol expansion</strong> — Cumulative change ${fmtChg(sum3)}. Vol is rising quickly.`);
-    }
+    const sum3 = hist.slice(-3).reduce((a,b) => a + (b.chg||0), 0);
+    if (sum3 <= -15) signals.push(`<strong>3-day vol crush</strong> — Cumulative ${fmtChg(sum3)}.`);
+    else if (sum3 >= 12) signals.push(`<strong>3-day vol expansion</strong> — Cumulative ${fmtChg(sum3)}.`);
   }
 
-  if (signals.length === 0) {
-    signals.push(`No strong extreme signals at the moment. Conditions appear relatively neutral.`);
-  }
+  if (signals.length === 0) signals.push(`No strong extreme signals right now.`);
 
   document.getElementById('signalsCard').innerHTML = `
     <h3>Interpretive Signals</h3>
@@ -344,19 +461,15 @@ function renderSignals(asset) {
   `;
 }
 
-// ========== 2. Term Structure ==========
 function renderTerm(asset) {
   const ts = asset.term_structure || [];
-  const labels = ts.map(t => t.period);
-  const cvols = ts.map(t => t.cvol);
-
   if (termChart) termChart.destroy();
   termChart = new Chart(document.getElementById('termChart'), {
     type: 'line',
     data: {
-      labels,
+      labels: ts.map(t => t.period),
       datasets: [{
-        label: 'CVOL', data: cvols,
+        label: 'CVOL', data: ts.map(t => t.cvol),
         borderColor: '#58a6ff', backgroundColor: '#58a6ff22',
         fill: true, tension: 0.25, pointRadius: 5
       }]
@@ -383,21 +496,16 @@ function renderTerm(asset) {
   document.getElementById('termTable').innerHTML = html;
 }
 
-// ========== 3. Daily Changes ==========
 function renderChanges(asset) {
   const hist = (asset.history_1m || []).slice().reverse();
-  const labels = hist.map(h => h.date);
-  const cvols = hist.map(h => h.cvol);
-  const chgs  = hist.map(h => h.chg);
-
   if (chgChart) chgChart.destroy();
   chgChart = new Chart(document.getElementById('chgChart'), {
     type: 'line',
     data: {
-      labels,
+      labels: hist.map(h => h.date),
       datasets: [
-        { label: 'CVOL', data: cvols, borderColor: '#58a6ff', tension: 0.2, yAxisID: 'y' },
-        { label: 'CHG', data: chgs, borderColor: '#f85149', borderDash: [4,4], tension: 0.2, yAxisID: 'y1' }
+        { label: 'CVOL', data: hist.map(h => h.cvol), borderColor: '#58a6ff', tension: 0.2, yAxisID: 'y' },
+        { label: 'CHG', data: hist.map(h => h.chg), borderColor: '#f85149', borderDash: [4,4], tension: 0.2, yAxisID: 'y1' }
       ]
     },
     options: {
@@ -410,12 +518,11 @@ function renderChanges(asset) {
     }
   });
 
-  // Signal card for changes
   const s = asset.summary || {};
   const abs = Math.abs(s.latest_chg || 0);
   let signal = 'Daily move is within normal range.';
-  if (abs >= 8) signal = `<strong>Extreme move</strong> — ${fmtChg(s.latest_chg)}. High chance of continued volatility or mean-reversion in the next sessions.`;
-  else if (abs >= 4) signal = `<strong>Significant move</strong> — ${fmtChg(s.latest_chg)}. Momentum may persist short-term.`;
+  if (abs >= 8) signal = `<strong>Extreme move</strong> — ${fmtChg(s.latest_chg)}.`;
+  else if (abs >= 4) signal = `<strong>Significant move</strong> — ${fmtChg(s.latest_chg)}.`;
 
   document.getElementById('chgSignalCard').innerHTML = `
     <h3>Change Interpretation</h3>
@@ -424,23 +531,17 @@ function renderChanges(asset) {
   `;
 }
 
-// ========== 4. Skew ==========
 function renderSkew(asset) {
   const snap = asset.snapshot || [];
-  const labels = snap.map(s => s.period);
-  const dn = snap.map(s => s.dnvar);
-  const up = snap.map(s => s.upvar);
-  const sk = snap.map(s => s.skew);
-
   if (skewChart) skewChart.destroy();
   skewChart = new Chart(document.getElementById('skewChart'), {
     type: 'bar',
     data: {
-      labels,
+      labels: snap.map(s => s.period),
       datasets: [
-        { label: 'DNVAR', data: dn, backgroundColor: '#f8514988' },
-        { label: 'UPVAR', data: up, backgroundColor: '#3fb95088' },
-        { label: 'SKEW', data: sk, type: 'line', borderColor: '#a371f7', yAxisID: 'y1' }
+        { label: 'DNVAR', data: snap.map(s => s.dnvar), backgroundColor: '#f8514988' },
+        { label: 'UPVAR', data: snap.map(s => s.upvar), backgroundColor: '#3fb95088' },
+        { label: 'SKEW', data: snap.map(s => s.skew), type: 'line', borderColor: '#a371f7', yAxisID: 'y1' }
       ]
     },
     options: {
@@ -455,8 +556,8 @@ function renderSkew(asset) {
 
   const m1 = snap.find(s => s.period === '1M') || {};
   let skewSignal = 'Skew is relatively balanced.';
-  if (m1.skew > 12) skewSignal = `<strong>Strong positive skew</strong> — Upside variance is dominant or downside is cheap.`;
-  else if (m1.skew < -8) skewSignal = `<strong>Strong negative skew</strong> — Downside protection is expensive.`;
+  if (m1.skew > 12) skewSignal = `<strong>Strong positive skew</strong>.`;
+  else if (m1.skew < -8) skewSignal = `<strong>Strong negative skew</strong>.`;
 
   document.getElementById('skewSignalCard').innerHTML = `
     <h3>Skew Interpretation</h3>
@@ -467,17 +568,16 @@ function renderSkew(asset) {
   `;
 }
 
-// ========== 5. Proximity ==========
 function renderProximity(asset) {
   const s = asset.summary || {};
   const pct = (s.proximity_1m || 0) * 100;
   const color = pct >= 85 ? 'var(--green)' : pct <= 15 ? 'var(--red)' : 'var(--yellow)';
 
-  let signal = 'CVOL is in the middle of its recent range — neutral.';
-  if (pct >= 90) signal = `<strong>Mean-reversion expected (High)</strong> — Price is near the top of the range. Vol compression more likely.`;
-  else if (pct <= 10) signal = `<strong>Mean-reversion expected (Low)</strong> — Price is near the bottom of the range. Vol expansion more likely.`;
-  else if (pct >= 75) signal = `Approaching the high of the range. Watch for rejection or breakout.`;
-  else if (pct <= 25) signal = `Approaching the low of the range. Watch for bounce or further decline.`;
+  let signal = 'CVOL is in the middle of its recent range.';
+  if (pct >= 90) signal = `<strong>Mean-reversion expected (High)</strong> — Vol compression more likely.`;
+  else if (pct <= 10) signal = `<strong>Mean-reversion expected (Low)</strong> — Vol expansion more likely.`;
+  else if (pct >= 75) signal = `Approaching the high of the range.`;
+  else if (pct <= 25) signal = `Approaching the low of the range.`;
 
   document.getElementById('proxCard').innerHTML = `
     <h3>Proximity to Recent Range (1M)</h3>
@@ -485,12 +585,11 @@ function renderProximity(asset) {
     <div style="height:10px;background:#21262d;border-radius:5px;margin:0.8rem 0;overflow:hidden">
       <div style="height:100%;width:${pct}%;background:${color}"></div>
     </div>
-    <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.8rem">0% = Low of range · 100% = High of range</div>
+    <div style="font-size:0.8rem;color:var(--muted);margin-bottom:0.8rem">0% = Low · 100% = High</div>
     <div class="signal-box">${signal}</div>
   `;
 }
 
-// ========== 6. Convexity ==========
 function renderConvex(asset) {
   const snap = asset.snapshot || [];
   let rows = '';
@@ -499,14 +598,10 @@ function renderConvex(asset) {
   });
   document.getElementById('convexCard').innerHTML = `
     <h3>Convexity across tenors</h3>
-    <table>
-      <thead><tr><th>Period</th><th>Convex</th><th>Chg</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
+    <table><thead><tr><th>Period</th><th>Convex</th><th>Chg</th></tr></thead><tbody>${rows}</tbody></table>
   `;
 }
 
-// ========== 7. Full Snapshot ==========
 function renderFullSnap(asset) {
   const snap = asset.snapshot || [];
   let rows = '';
@@ -519,15 +614,12 @@ function renderFullSnap(asset) {
   });
   document.getElementById('fullSnapCard').innerHTML = `
     <table>
-      <thead>
-        <tr><th>Period</th><th>CVOL</th><th>CHG</th><th>DNVAR</th><th>UPVAR</th><th>Skew</th><th>Skew^R</th><th>Convex</th></tr>
-      </thead>
+      <thead><tr><th>Period</th><th>CVOL</th><th>CHG</th><th>DNVAR</th><th>UPVAR</th><th>Skew</th><th>Skew^R</th><th>Convex</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
   `;
 }
 
-// Helpers
 function fmt(v){ return v==null?'—':Number(v).toFixed(2); }
 function fmtChg(v){ if(v==null)return'—'; const n=Number(v); return (n>0?'+':'')+n.toFixed(2); }
 function fmtPct(v){ return v==null?'—':(Number(v)*100).toFixed(1)+'%'; }
