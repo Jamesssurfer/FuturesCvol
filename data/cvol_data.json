@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-11-01T10:52:32Z",
-  "as_of_date": "2026-10-30",
+  "generated_at": "2026-11-03T05:51:47Z",
+  "as_of_date": "2026-11-02",
   "asset_classes": {
     "Treasury Yield": [
       {
         "name": "10Y Bond",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 126.32,
           "latest_chg": 10.47,
@@ -110,6 +110,21 @@
             "lo": 75.95,
             "hi": 139.94,
             "proximity": 0.7872,
+            "skew": -13.73,
+            "skew_chg": -8.13,
+            "dnvar": 133,
+            "upvar": 119.27,
+            "skew_r": 0.9,
+            "convex": 1.07,
+            "convex_chg": -0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 126.32,
+            "chg": 10.47,
+            "lo": 69.06,
+            "hi": 155.95,
+            "proximity": 0.659,
             "skew": -13.73,
             "skew_chg": -8.13,
             "dnvar": 133,
@@ -369,12 +384,22 @@
             "dnvar": 133,
             "upvar": 119.27,
             "convex": 1.07
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 126.32,
+            "chg": 10.47,
+            "proximity": 0.4346,
+            "skew": -13.73,
+            "dnvar": 133,
+            "upvar": 119.27,
+            "convex": 1.07
           }
         ]
       },
       {
         "name": "2Y Bond",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 139.32,
           "latest_chg": 18.21,
@@ -479,6 +504,21 @@
             "lo": 86.81,
             "hi": 148.53,
             "proximity": 0.8508,
+            "skew": -17.09,
+            "skew_chg": -17.59,
+            "dnvar": 147.6,
+            "upvar": 130.51,
+            "skew_r": 0.88,
+            "convex": 1.07,
+            "convex_chg": -0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 139.32,
+            "chg": 18.21,
+            "lo": 55.81,
+            "hi": 211.02,
+            "proximity": 0.538,
             "skew": -17.09,
             "skew_chg": -17.59,
             "dnvar": 147.6,
@@ -738,12 +778,22 @@
             "dnvar": 147.6,
             "upvar": 130.51,
             "convex": 1.07
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 139.32,
+            "chg": 18.21,
+            "proximity": 0.7267,
+            "skew": -17.09,
+            "dnvar": 147.6,
+            "upvar": 130.51,
+            "convex": 1.07
           }
         ]
       },
       {
         "name": "30Y Bond",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 107.38,
           "latest_chg": 7.59,
@@ -848,6 +898,21 @@
             "lo": 71.25,
             "hi": 126.07,
             "proximity": 0.6591,
+            "skew": -7.73,
+            "skew_chg": -7.47,
+            "dnvar": 111.18,
+            "upvar": 103.45,
+            "skew_r": 0.93,
+            "convex": 1.09,
+            "convex_chg": 0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 107.38,
+            "chg": 7.59,
+            "lo": 68.8,
+            "hi": 126.07,
+            "proximity": 0.6737,
             "skew": -7.73,
             "skew_chg": -7.47,
             "dnvar": 111.18,
@@ -1107,12 +1172,22 @@
             "dnvar": 111.18,
             "upvar": 103.45,
             "convex": 1.09
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 107.38,
+            "chg": 7.59,
+            "proximity": 0.2888,
+            "skew": -7.73,
+            "dnvar": 111.18,
+            "upvar": 103.45,
+            "convex": 1.09
           }
         ]
       },
       {
         "name": "Treasury",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 127.44,
           "latest_chg": 12.11,
@@ -1217,6 +1292,21 @@
             "lo": 78.45,
             "hi": 139.99,
             "proximity": 0.7961,
+            "skew": -15.12,
+            "skew_chg": -11.09,
+            "dnvar": 134.76,
+            "upvar": 119.64,
+            "skew_r": 0.89,
+            "convex": 1.07,
+            "convex_chg": 0
+          },
+          {
+            "period": "1Y",
+            "cvol": 127.44,
+            "chg": 12.11,
+            "lo": 67.34,
+            "hi": 170.41,
+            "proximity": 0.5831,
             "skew": -15.12,
             "skew_chg": -11.09,
             "dnvar": 134.76,
@@ -1476,6 +1566,16 @@
             "dnvar": 134.76,
             "upvar": 119.64,
             "convex": 1.07
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 127.44,
+            "chg": 12.11,
+            "proximity": 0.4911,
+            "skew": -15.12,
+            "dnvar": 134.76,
+            "upvar": 119.64,
+            "convex": 1.07
           }
         ]
       }
@@ -1483,11 +1583,11 @@
     "STIRs": [
       {
         "name": "3M SOFR",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 113.24,
           "latest_chg": 10.26,
-          "proximity_1m": 0.6907,
+          "proximity_1m": 0.6424,
           "skew_1m": -39.64,
           "convex_1m": 1.27,
           "is_near_high": false,
@@ -1508,7 +1608,7 @@
             "period": "1M",
             "cvol": 113.24,
             "chg": 10.26,
-            "proximity": 0.6907,
+            "proximity": 0.6424,
             "skew": -39.64,
             "convex": 1.27,
             "dnvar": 131.32,
@@ -1555,9 +1655,9 @@
             "period": "1M",
             "cvol": 113.24,
             "chg": 10.26,
-            "lo": 83.43,
+            "lo": 89.26,
             "hi": 126.59,
-            "proximity": 0.6907,
+            "proximity": 0.6424,
             "skew": -39.64,
             "skew_chg": -9.58,
             "dnvar": 131.32,
@@ -1588,6 +1688,21 @@
             "lo": 60,
             "hi": 126.59,
             "proximity": 0.7995,
+            "skew": -39.64,
+            "skew_chg": -9.58,
+            "dnvar": 131.32,
+            "upvar": 91.67,
+            "skew_r": 0.7,
+            "convex": 1.27,
+            "convex_chg": -0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 113.24,
+            "chg": 10.26,
+            "lo": 48.29,
+            "hi": 126.59,
+            "proximity": 0.8295,
             "skew": -39.64,
             "skew_chg": -9.58,
             "dnvar": 131.32,
@@ -1847,6 +1962,16 @@
             "dnvar": 131.32,
             "upvar": 91.67,
             "convex": 1.27
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 113.24,
+            "chg": 10.26,
+            "proximity": 0.6424,
+            "skew": -39.64,
+            "dnvar": 131.32,
+            "upvar": 91.67,
+            "convex": 1.27
           }
         ]
       }
@@ -1854,7 +1979,7 @@
     "FX": [
       {
         "name": "AUDUSD",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 7.27,
           "latest_chg": 0.08,
@@ -1959,6 +2084,21 @@
             "lo": 6.66,
             "hi": 9.85,
             "proximity": 0.1912,
+            "skew": -1.13,
+            "skew_chg": -0.05,
+            "dnvar": 7.81,
+            "upvar": 6.68,
+            "skew_r": 0.86,
+            "convex": 1.05,
+            "convex_chg": 0
+          },
+          {
+            "period": "1Y",
+            "cvol": 7.27,
+            "chg": 0.08,
+            "lo": 6.66,
+            "hi": 13.25,
+            "proximity": 0.0926,
             "skew": -1.13,
             "skew_chg": -0.05,
             "dnvar": 7.81,
@@ -2218,12 +2358,22 @@
             "dnvar": 7.81,
             "upvar": 6.68,
             "convex": 1.05
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 7.27,
+            "chg": 0.08,
+            "proximity": 0.05,
+            "skew": -1.13,
+            "dnvar": 7.81,
+            "upvar": 6.68,
+            "convex": 1.05
           }
         ]
       },
       {
         "name": "CADUSD",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 4.58,
           "latest_chg": -0.06,
@@ -2328,6 +2478,21 @@
             "lo": 4.16,
             "hi": 5.41,
             "proximity": 0.336,
+            "skew": -0.06,
+            "skew_chg": 0.01,
+            "dnvar": 4.61,
+            "upvar": 4.55,
+            "skew_r": 0.99,
+            "convex": 1.04,
+            "convex_chg": -0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 4.58,
+            "chg": -0.06,
+            "lo": 4.16,
+            "hi": 6.87,
+            "proximity": 0.155,
             "skew": -0.06,
             "skew_chg": 0.01,
             "dnvar": 4.61,
@@ -2587,12 +2752,22 @@
             "dnvar": 4.61,
             "upvar": 4.55,
             "convex": 1.04
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 4.58,
+            "chg": -0.06,
+            "proximity": 0,
+            "skew": -0.06,
+            "dnvar": 4.61,
+            "upvar": 4.55,
+            "convex": 1.04
           }
         ]
       },
       {
         "name": "CHFUSD",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 7.24,
           "latest_chg": 0.44,
@@ -2697,6 +2872,21 @@
             "lo": 6.11,
             "hi": 8.25,
             "proximity": 0.528,
+            "skew": 1.17,
+            "skew_chg": 0.17,
+            "dnvar": 6.64,
+            "upvar": 7.8,
+            "skew_r": 1.18,
+            "convex": 1.08,
+            "convex_chg": -0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 7.24,
+            "chg": 0.44,
+            "lo": 6.11,
+            "hi": 11.25,
+            "proximity": 0.2198,
             "skew": 1.17,
             "skew_chg": 0.17,
             "dnvar": 6.64,
@@ -2956,12 +3146,22 @@
             "dnvar": 6.64,
             "upvar": 7.8,
             "convex": 1.08
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 7.24,
+            "chg": 0.44,
+            "proximity": 0.3034,
+            "skew": 1.17,
+            "dnvar": 6.64,
+            "upvar": 7.8,
+            "convex": 1.08
           }
         ]
       },
       {
         "name": "EURUSD",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 6.48,
           "latest_chg": 0.12,
@@ -3066,6 +3266,21 @@
             "lo": 4.89,
             "hi": 8.09,
             "proximity": 0.4969,
+            "skew": -0.26,
+            "skew_chg": 0.05,
+            "dnvar": 6.6,
+            "upvar": 6.34,
+            "skew_r": 0.96,
+            "convex": 1.06,
+            "convex_chg": -0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 6.48,
+            "chg": 0.12,
+            "lo": 4.89,
+            "hi": 9.74,
+            "proximity": 0.3278,
             "skew": -0.26,
             "skew_chg": 0.05,
             "dnvar": 6.6,
@@ -3325,16 +3540,26 @@
             "dnvar": 6.6,
             "upvar": 6.34,
             "convex": 1.06
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 6.48,
+            "chg": 0.12,
+            "proximity": 0.0694,
+            "skew": -0.26,
+            "dnvar": 6.6,
+            "upvar": 6.34,
+            "convex": 1.06
           }
         ]
       },
       {
         "name": "GBPUSD",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 6.1,
           "latest_chg": 0.05,
-          "proximity_1m": 0.0273,
+          "proximity_1m": 0.049,
           "skew_1m": -0.55,
           "convex_1m": 1.07,
           "is_near_high": false,
@@ -3355,7 +3580,7 @@
             "period": "1M",
             "cvol": 6.1,
             "chg": 0.05,
-            "proximity": 0.0273,
+            "proximity": 0.049,
             "skew": -0.55,
             "convex": 1.07,
             "dnvar": 6.37,
@@ -3403,8 +3628,8 @@
             "cvol": 6.1,
             "chg": 0.05,
             "lo": 6.05,
-            "hi": 7.88,
-            "proximity": 0.0273,
+            "hi": 7.07,
+            "proximity": 0.049,
             "skew": -0.55,
             "skew_chg": 0.07,
             "dnvar": 6.37,
@@ -3435,6 +3660,21 @@
             "lo": 5.15,
             "hi": 8,
             "proximity": 0.3333,
+            "skew": -0.55,
+            "skew_chg": 0.07,
+            "dnvar": 6.37,
+            "upvar": 5.82,
+            "skew_r": 0.91,
+            "convex": 1.07,
+            "convex_chg": 0
+          },
+          {
+            "period": "1Y",
+            "cvol": 6.1,
+            "chg": 0.05,
+            "lo": 5.15,
+            "hi": 9.69,
+            "proximity": 0.2093,
             "skew": -0.55,
             "skew_chg": 0.07,
             "dnvar": 6.37,
@@ -3694,16 +3934,26 @@
             "dnvar": 6.37,
             "upvar": 5.82,
             "convex": 1.07
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 6.1,
+            "chg": 0.05,
+            "proximity": 0.049,
+            "skew": -0.55,
+            "dnvar": 6.37,
+            "upvar": 5.82,
+            "convex": 1.07
           }
         ]
       },
       {
         "name": "JPYUSD",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 8.15,
           "latest_chg": 0.13,
-          "proximity_1m": 0.0875,
+          "proximity_1m": 0.1117,
           "skew_1m": 2.59,
           "convex_1m": 1.07,
           "is_near_high": false,
@@ -3724,7 +3974,7 @@
             "period": "1M",
             "cvol": 8.15,
             "chg": 0.13,
-            "proximity": 0.0875,
+            "proximity": 0.1117,
             "skew": 2.59,
             "convex": 1.07,
             "dnvar": 6.75,
@@ -3772,8 +4022,8 @@
             "cvol": 8.15,
             "chg": 0.13,
             "lo": 7.94,
-            "hi": 10.34,
-            "proximity": 0.0875,
+            "hi": 9.82,
+            "proximity": 0.1117,
             "skew": 2.59,
             "skew_chg": 0.06,
             "dnvar": 6.75,
@@ -3804,6 +4054,21 @@
             "lo": 6.97,
             "hi": 12.14,
             "proximity": 0.2282,
+            "skew": 2.59,
+            "skew_chg": 0.06,
+            "dnvar": 6.75,
+            "upvar": 9.34,
+            "skew_r": 1.38,
+            "convex": 1.07,
+            "convex_chg": -0.05
+          },
+          {
+            "period": "1Y",
+            "cvol": 8.15,
+            "chg": 0.13,
+            "lo": 6.97,
+            "hi": 12.48,
+            "proximity": 0.2142,
             "skew": 2.59,
             "skew_chg": 0.06,
             "dnvar": 6.75,
@@ -4063,6 +4328,16 @@
             "dnvar": 6.75,
             "upvar": 9.34,
             "convex": 1.07
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 8.15,
+            "chg": 0.13,
+            "proximity": 0.1117,
+            "skew": 2.59,
+            "dnvar": 6.75,
+            "upvar": 9.34,
+            "convex": 1.07
           }
         ]
       }
@@ -4070,7 +4345,7 @@
     "Metals": [
       {
         "name": "Gold",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 25.97,
           "latest_chg": 4.12,
@@ -4175,6 +4450,21 @@
             "lo": 20.58,
             "hi": 30.33,
             "proximity": 0.5528,
+            "skew": -1.73,
+            "skew_chg": -1.76,
+            "dnvar": 26.83,
+            "upvar": 25.09,
+            "skew_r": 0.94,
+            "convex": 1.11,
+            "convex_chg": 0
+          },
+          {
+            "period": "1Y",
+            "cvol": 25.97,
+            "chg": 4.12,
+            "lo": 19.2,
+            "hi": 46.46,
+            "proximity": 0.2483,
             "skew": -1.73,
             "skew_chg": -1.76,
             "dnvar": 26.83,
@@ -4434,12 +4724,22 @@
             "dnvar": 26.83,
             "upvar": 25.09,
             "convex": 1.11
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 25.97,
+            "chg": 4.12,
+            "proximity": 1,
+            "skew": -1.73,
+            "dnvar": 26.83,
+            "upvar": 25.09,
+            "convex": 1.11
           }
         ]
       },
       {
         "name": "Silver",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 49.95,
           "latest_chg": 6.39,
@@ -4544,6 +4844,21 @@
             "lo": 35.27,
             "hi": 67.34,
             "proximity": 0.4577,
+            "skew": 0.8,
+            "skew_chg": -2.3,
+            "dnvar": 49.54,
+            "upvar": 50.35,
+            "skew_r": 1.02,
+            "convex": 1.11,
+            "convex_chg": -0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 49.95,
+            "chg": 6.39,
+            "lo": 32.61,
+            "hi": 125.91,
+            "proximity": 0.1859,
             "skew": 0.8,
             "skew_chg": -2.3,
             "dnvar": 49.54,
@@ -4803,19 +5118,29 @@
             "dnvar": 49.54,
             "upvar": 50.35,
             "convex": 1.11
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 49.95,
+            "chg": 6.39,
+            "proximity": 1,
+            "skew": 0.8,
+            "dnvar": 49.54,
+            "upvar": 50.35,
+            "convex": 1.11
           }
         ]
       },
       {
         "name": "Copper",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 26.14,
           "latest_chg": 2.38,
-          "proximity_1m": 0.7433,
+          "proximity_1m": 0.8798,
           "skew_1m": 0.36,
           "convex_1m": 1.14,
-          "is_near_high": false,
+          "is_near_high": true,
           "is_near_low": false
         },
         "term_structure": [
@@ -4833,7 +5158,7 @@
             "period": "1M",
             "cvol": 26.14,
             "chg": 2.38,
-            "proximity": 0.7433,
+            "proximity": 0.8798,
             "skew": 0.36,
             "convex": 1.14,
             "dnvar": 25.96,
@@ -4881,8 +5206,8 @@
             "cvol": 26.14,
             "chg": 2.38,
             "lo": 22.26,
-            "hi": 27.48,
-            "proximity": 0.7433,
+            "hi": 26.67,
+            "proximity": 0.8798,
             "skew": 0.36,
             "skew_chg": -1.98,
             "dnvar": 25.96,
@@ -4913,6 +5238,21 @@
             "lo": 22.26,
             "hi": 39.37,
             "proximity": 0.2268,
+            "skew": 0.36,
+            "skew_chg": -1.98,
+            "dnvar": 25.96,
+            "upvar": 26.32,
+            "skew_r": 1.01,
+            "convex": 1.14,
+            "convex_chg": 0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 26.14,
+            "chg": 2.38,
+            "lo": 22.26,
+            "hi": 47.93,
+            "proximity": 0.1511,
             "skew": 0.36,
             "skew_chg": -1.98,
             "dnvar": 25.96,
@@ -5172,6 +5512,16 @@
             "dnvar": 25.96,
             "upvar": 26.32,
             "convex": 1.14
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 26.14,
+            "chg": 2.38,
+            "proximity": 0.8798,
+            "skew": 0.36,
+            "dnvar": 25.96,
+            "upvar": 26.32,
+            "convex": 1.14
           }
         ]
       }
@@ -5179,7 +5529,7 @@
     "Energy": [
       {
         "name": "WTI CRUDE OIL",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 60.91,
           "latest_chg": 1.82,
@@ -5214,7 +5564,7 @@
             "period": "3M",
             "cvol": 60.91,
             "chg": 1.82,
-            "proximity": 0.7088,
+            "proximity": 0.8144,
             "skew": 14.33,
             "convex": 1.15,
             "dnvar": 53.32,
@@ -5267,8 +5617,8 @@
             "cvol": 60.91,
             "chg": 1.82,
             "lo": 44.41,
-            "hi": 67.69,
-            "proximity": 0.7088,
+            "hi": 64.67,
+            "proximity": 0.8144,
             "skew": 14.33,
             "skew_chg": 0.08,
             "dnvar": 53.32,
@@ -5284,6 +5634,21 @@
             "lo": 40.48,
             "hi": 92.87,
             "proximity": 0.39,
+            "skew": 14.33,
+            "skew_chg": 0.08,
+            "dnvar": 53.32,
+            "upvar": 67.65,
+            "skew_r": 1.27,
+            "convex": 1.15,
+            "convex_chg": 0
+          },
+          {
+            "period": "1Y",
+            "cvol": 60.91,
+            "chg": 1.82,
+            "lo": 30.49,
+            "hi": 142.68,
+            "proximity": 0.2711,
             "skew": 14.33,
             "skew_chg": 0.08,
             "dnvar": 53.32,
@@ -5543,12 +5908,22 @@
             "dnvar": 53.32,
             "upvar": 67.65,
             "convex": 1.15
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 60.91,
+            "chg": 1.82,
+            "proximity": 0.8422,
+            "skew": 14.33,
+            "dnvar": 53.32,
+            "upvar": 67.65,
+            "convex": 1.15
           }
         ]
       },
       {
         "name": "Heating Oil",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 62.78,
           "latest_chg": -0.66,
@@ -5653,6 +6028,21 @@
             "lo": 39.84,
             "hi": 89.34,
             "proximity": 0.4634,
+            "skew": 12.85,
+            "skew_chg": 1.1,
+            "dnvar": 56.03,
+            "upvar": 68.88,
+            "skew_r": 1.23,
+            "convex": 1.05,
+            "convex_chg": -0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 62.78,
+            "chg": -0.66,
+            "lo": 29.52,
+            "hi": 113.51,
+            "proximity": 0.396,
             "skew": 12.85,
             "skew_chg": 1.1,
             "dnvar": 56.03,
@@ -5912,12 +6302,22 @@
             "dnvar": 56.03,
             "upvar": 68.88,
             "convex": 1.05
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 62.78,
+            "chg": -0.66,
+            "proximity": 0.3149,
+            "skew": 12.85,
+            "dnvar": 56.03,
+            "upvar": 68.88,
+            "convex": 1.05
           }
         ]
       },
       {
         "name": "NAT GAS",
-        "as_of": "2026-10-30",
+        "as_of": "2026-11-02",
         "summary": {
           "latest_cvol": 85.17,
           "latest_chg": 0.04,
@@ -5989,7 +6389,7 @@
             "period": "1M",
             "cvol": 85.17,
             "chg": 0.04,
-            "lo": 62.05,
+            "lo": 68.84,
             "hi": 85.17,
             "proximity": 1,
             "skew": 39.17,
@@ -6022,6 +6422,21 @@
             "lo": 45.44,
             "hi": 85.17,
             "proximity": 1,
+            "skew": 39.17,
+            "skew_chg": -2.67,
+            "dnvar": 63.3,
+            "upvar": 102.47,
+            "skew_r": 1.62,
+            "convex": 1.24,
+            "convex_chg": -0.01
+          },
+          {
+            "period": "1Y",
+            "cvol": 85.17,
+            "chg": 0.04,
+            "lo": 45.44,
+            "hi": 160.35,
+            "proximity": 0.3457,
             "skew": 39.17,
             "skew_chg": -2.67,
             "dnvar": 63.3,
@@ -6281,6 +6696,16 @@
             "dnvar": 63.3,
             "upvar": 102.47,
             "convex": 1.24
+          },
+          {
+            "date": "2026-11-02",
+            "cvol": 85.17,
+            "chg": 0.04,
+            "proximity": 1,
+            "skew": 39.17,
+            "dnvar": 63.3,
+            "upvar": 102.47,
+            "convex": 1.24
           }
         ]
       }
@@ -6289,7 +6714,7 @@
   "assets": [
     {
       "name": "10Y Bond",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 126.32,
         "latest_chg": 10.47,
@@ -6394,6 +6819,21 @@
           "lo": 75.95,
           "hi": 139.94,
           "proximity": 0.7872,
+          "skew": -13.73,
+          "skew_chg": -8.13,
+          "dnvar": 133,
+          "upvar": 119.27,
+          "skew_r": 0.9,
+          "convex": 1.07,
+          "convex_chg": -0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 126.32,
+          "chg": 10.47,
+          "lo": 69.06,
+          "hi": 155.95,
+          "proximity": 0.659,
           "skew": -13.73,
           "skew_chg": -8.13,
           "dnvar": 133,
@@ -6653,12 +7093,22 @@
           "dnvar": 133,
           "upvar": 119.27,
           "convex": 1.07
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 126.32,
+          "chg": 10.47,
+          "proximity": 0.4346,
+          "skew": -13.73,
+          "dnvar": 133,
+          "upvar": 119.27,
+          "convex": 1.07
         }
       ]
     },
     {
       "name": "2Y Bond",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 139.32,
         "latest_chg": 18.21,
@@ -6763,6 +7213,21 @@
           "lo": 86.81,
           "hi": 148.53,
           "proximity": 0.8508,
+          "skew": -17.09,
+          "skew_chg": -17.59,
+          "dnvar": 147.6,
+          "upvar": 130.51,
+          "skew_r": 0.88,
+          "convex": 1.07,
+          "convex_chg": -0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 139.32,
+          "chg": 18.21,
+          "lo": 55.81,
+          "hi": 211.02,
+          "proximity": 0.538,
           "skew": -17.09,
           "skew_chg": -17.59,
           "dnvar": 147.6,
@@ -7022,12 +7487,22 @@
           "dnvar": 147.6,
           "upvar": 130.51,
           "convex": 1.07
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 139.32,
+          "chg": 18.21,
+          "proximity": 0.7267,
+          "skew": -17.09,
+          "dnvar": 147.6,
+          "upvar": 130.51,
+          "convex": 1.07
         }
       ]
     },
     {
       "name": "30Y Bond",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 107.38,
         "latest_chg": 7.59,
@@ -7132,6 +7607,21 @@
           "lo": 71.25,
           "hi": 126.07,
           "proximity": 0.6591,
+          "skew": -7.73,
+          "skew_chg": -7.47,
+          "dnvar": 111.18,
+          "upvar": 103.45,
+          "skew_r": 0.93,
+          "convex": 1.09,
+          "convex_chg": 0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 107.38,
+          "chg": 7.59,
+          "lo": 68.8,
+          "hi": 126.07,
+          "proximity": 0.6737,
           "skew": -7.73,
           "skew_chg": -7.47,
           "dnvar": 111.18,
@@ -7391,12 +7881,22 @@
           "dnvar": 111.18,
           "upvar": 103.45,
           "convex": 1.09
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 107.38,
+          "chg": 7.59,
+          "proximity": 0.2888,
+          "skew": -7.73,
+          "dnvar": 111.18,
+          "upvar": 103.45,
+          "convex": 1.09
         }
       ]
     },
     {
       "name": "Treasury",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 127.44,
         "latest_chg": 12.11,
@@ -7501,6 +8001,21 @@
           "lo": 78.45,
           "hi": 139.99,
           "proximity": 0.7961,
+          "skew": -15.12,
+          "skew_chg": -11.09,
+          "dnvar": 134.76,
+          "upvar": 119.64,
+          "skew_r": 0.89,
+          "convex": 1.07,
+          "convex_chg": 0
+        },
+        {
+          "period": "1Y",
+          "cvol": 127.44,
+          "chg": 12.11,
+          "lo": 67.34,
+          "hi": 170.41,
+          "proximity": 0.5831,
           "skew": -15.12,
           "skew_chg": -11.09,
           "dnvar": 134.76,
@@ -7760,16 +8275,26 @@
           "dnvar": 134.76,
           "upvar": 119.64,
           "convex": 1.07
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 127.44,
+          "chg": 12.11,
+          "proximity": 0.4911,
+          "skew": -15.12,
+          "dnvar": 134.76,
+          "upvar": 119.64,
+          "convex": 1.07
         }
       ]
     },
     {
       "name": "3M SOFR",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 113.24,
         "latest_chg": 10.26,
-        "proximity_1m": 0.6907,
+        "proximity_1m": 0.6424,
         "skew_1m": -39.64,
         "convex_1m": 1.27,
         "is_near_high": false,
@@ -7790,7 +8315,7 @@
           "period": "1M",
           "cvol": 113.24,
           "chg": 10.26,
-          "proximity": 0.6907,
+          "proximity": 0.6424,
           "skew": -39.64,
           "convex": 1.27,
           "dnvar": 131.32,
@@ -7837,9 +8362,9 @@
           "period": "1M",
           "cvol": 113.24,
           "chg": 10.26,
-          "lo": 83.43,
+          "lo": 89.26,
           "hi": 126.59,
-          "proximity": 0.6907,
+          "proximity": 0.6424,
           "skew": -39.64,
           "skew_chg": -9.58,
           "dnvar": 131.32,
@@ -7870,6 +8395,21 @@
           "lo": 60,
           "hi": 126.59,
           "proximity": 0.7995,
+          "skew": -39.64,
+          "skew_chg": -9.58,
+          "dnvar": 131.32,
+          "upvar": 91.67,
+          "skew_r": 0.7,
+          "convex": 1.27,
+          "convex_chg": -0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 113.24,
+          "chg": 10.26,
+          "lo": 48.29,
+          "hi": 126.59,
+          "proximity": 0.8295,
           "skew": -39.64,
           "skew_chg": -9.58,
           "dnvar": 131.32,
@@ -8129,12 +8669,22 @@
           "dnvar": 131.32,
           "upvar": 91.67,
           "convex": 1.27
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 113.24,
+          "chg": 10.26,
+          "proximity": 0.6424,
+          "skew": -39.64,
+          "dnvar": 131.32,
+          "upvar": 91.67,
+          "convex": 1.27
         }
       ]
     },
     {
       "name": "AUDUSD",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 7.27,
         "latest_chg": 0.08,
@@ -8239,6 +8789,21 @@
           "lo": 6.66,
           "hi": 9.85,
           "proximity": 0.1912,
+          "skew": -1.13,
+          "skew_chg": -0.05,
+          "dnvar": 7.81,
+          "upvar": 6.68,
+          "skew_r": 0.86,
+          "convex": 1.05,
+          "convex_chg": 0
+        },
+        {
+          "period": "1Y",
+          "cvol": 7.27,
+          "chg": 0.08,
+          "lo": 6.66,
+          "hi": 13.25,
+          "proximity": 0.0926,
           "skew": -1.13,
           "skew_chg": -0.05,
           "dnvar": 7.81,
@@ -8498,12 +9063,22 @@
           "dnvar": 7.81,
           "upvar": 6.68,
           "convex": 1.05
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 7.27,
+          "chg": 0.08,
+          "proximity": 0.05,
+          "skew": -1.13,
+          "dnvar": 7.81,
+          "upvar": 6.68,
+          "convex": 1.05
         }
       ]
     },
     {
       "name": "CADUSD",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 4.58,
         "latest_chg": -0.06,
@@ -8608,6 +9183,21 @@
           "lo": 4.16,
           "hi": 5.41,
           "proximity": 0.336,
+          "skew": -0.06,
+          "skew_chg": 0.01,
+          "dnvar": 4.61,
+          "upvar": 4.55,
+          "skew_r": 0.99,
+          "convex": 1.04,
+          "convex_chg": -0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 4.58,
+          "chg": -0.06,
+          "lo": 4.16,
+          "hi": 6.87,
+          "proximity": 0.155,
           "skew": -0.06,
           "skew_chg": 0.01,
           "dnvar": 4.61,
@@ -8867,12 +9457,22 @@
           "dnvar": 4.61,
           "upvar": 4.55,
           "convex": 1.04
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 4.58,
+          "chg": -0.06,
+          "proximity": 0,
+          "skew": -0.06,
+          "dnvar": 4.61,
+          "upvar": 4.55,
+          "convex": 1.04
         }
       ]
     },
     {
       "name": "CHFUSD",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 7.24,
         "latest_chg": 0.44,
@@ -8977,6 +9577,21 @@
           "lo": 6.11,
           "hi": 8.25,
           "proximity": 0.528,
+          "skew": 1.17,
+          "skew_chg": 0.17,
+          "dnvar": 6.64,
+          "upvar": 7.8,
+          "skew_r": 1.18,
+          "convex": 1.08,
+          "convex_chg": -0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 7.24,
+          "chg": 0.44,
+          "lo": 6.11,
+          "hi": 11.25,
+          "proximity": 0.2198,
           "skew": 1.17,
           "skew_chg": 0.17,
           "dnvar": 6.64,
@@ -9236,12 +9851,22 @@
           "dnvar": 6.64,
           "upvar": 7.8,
           "convex": 1.08
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 7.24,
+          "chg": 0.44,
+          "proximity": 0.3034,
+          "skew": 1.17,
+          "dnvar": 6.64,
+          "upvar": 7.8,
+          "convex": 1.08
         }
       ]
     },
     {
       "name": "EURUSD",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 6.48,
         "latest_chg": 0.12,
@@ -9346,6 +9971,21 @@
           "lo": 4.89,
           "hi": 8.09,
           "proximity": 0.4969,
+          "skew": -0.26,
+          "skew_chg": 0.05,
+          "dnvar": 6.6,
+          "upvar": 6.34,
+          "skew_r": 0.96,
+          "convex": 1.06,
+          "convex_chg": -0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 6.48,
+          "chg": 0.12,
+          "lo": 4.89,
+          "hi": 9.74,
+          "proximity": 0.3278,
           "skew": -0.26,
           "skew_chg": 0.05,
           "dnvar": 6.6,
@@ -9605,16 +10245,26 @@
           "dnvar": 6.6,
           "upvar": 6.34,
           "convex": 1.06
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 6.48,
+          "chg": 0.12,
+          "proximity": 0.0694,
+          "skew": -0.26,
+          "dnvar": 6.6,
+          "upvar": 6.34,
+          "convex": 1.06
         }
       ]
     },
     {
       "name": "GBPUSD",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 6.1,
         "latest_chg": 0.05,
-        "proximity_1m": 0.0273,
+        "proximity_1m": 0.049,
         "skew_1m": -0.55,
         "convex_1m": 1.07,
         "is_near_high": false,
@@ -9635,7 +10285,7 @@
           "period": "1M",
           "cvol": 6.1,
           "chg": 0.05,
-          "proximity": 0.0273,
+          "proximity": 0.049,
           "skew": -0.55,
           "convex": 1.07,
           "dnvar": 6.37,
@@ -9683,8 +10333,8 @@
           "cvol": 6.1,
           "chg": 0.05,
           "lo": 6.05,
-          "hi": 7.88,
-          "proximity": 0.0273,
+          "hi": 7.07,
+          "proximity": 0.049,
           "skew": -0.55,
           "skew_chg": 0.07,
           "dnvar": 6.37,
@@ -9715,6 +10365,21 @@
           "lo": 5.15,
           "hi": 8,
           "proximity": 0.3333,
+          "skew": -0.55,
+          "skew_chg": 0.07,
+          "dnvar": 6.37,
+          "upvar": 5.82,
+          "skew_r": 0.91,
+          "convex": 1.07,
+          "convex_chg": 0
+        },
+        {
+          "period": "1Y",
+          "cvol": 6.1,
+          "chg": 0.05,
+          "lo": 5.15,
+          "hi": 9.69,
+          "proximity": 0.2093,
           "skew": -0.55,
           "skew_chg": 0.07,
           "dnvar": 6.37,
@@ -9974,16 +10639,26 @@
           "dnvar": 6.37,
           "upvar": 5.82,
           "convex": 1.07
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 6.1,
+          "chg": 0.05,
+          "proximity": 0.049,
+          "skew": -0.55,
+          "dnvar": 6.37,
+          "upvar": 5.82,
+          "convex": 1.07
         }
       ]
     },
     {
       "name": "JPYUSD",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 8.15,
         "latest_chg": 0.13,
-        "proximity_1m": 0.0875,
+        "proximity_1m": 0.1117,
         "skew_1m": 2.59,
         "convex_1m": 1.07,
         "is_near_high": false,
@@ -10004,7 +10679,7 @@
           "period": "1M",
           "cvol": 8.15,
           "chg": 0.13,
-          "proximity": 0.0875,
+          "proximity": 0.1117,
           "skew": 2.59,
           "convex": 1.07,
           "dnvar": 6.75,
@@ -10052,8 +10727,8 @@
           "cvol": 8.15,
           "chg": 0.13,
           "lo": 7.94,
-          "hi": 10.34,
-          "proximity": 0.0875,
+          "hi": 9.82,
+          "proximity": 0.1117,
           "skew": 2.59,
           "skew_chg": 0.06,
           "dnvar": 6.75,
@@ -10084,6 +10759,21 @@
           "lo": 6.97,
           "hi": 12.14,
           "proximity": 0.2282,
+          "skew": 2.59,
+          "skew_chg": 0.06,
+          "dnvar": 6.75,
+          "upvar": 9.34,
+          "skew_r": 1.38,
+          "convex": 1.07,
+          "convex_chg": -0.05
+        },
+        {
+          "period": "1Y",
+          "cvol": 8.15,
+          "chg": 0.13,
+          "lo": 6.97,
+          "hi": 12.48,
+          "proximity": 0.2142,
           "skew": 2.59,
           "skew_chg": 0.06,
           "dnvar": 6.75,
@@ -10343,12 +11033,22 @@
           "dnvar": 6.75,
           "upvar": 9.34,
           "convex": 1.07
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 8.15,
+          "chg": 0.13,
+          "proximity": 0.1117,
+          "skew": 2.59,
+          "dnvar": 6.75,
+          "upvar": 9.34,
+          "convex": 1.07
         }
       ]
     },
     {
       "name": "Gold",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 25.97,
         "latest_chg": 4.12,
@@ -10453,6 +11153,21 @@
           "lo": 20.58,
           "hi": 30.33,
           "proximity": 0.5528,
+          "skew": -1.73,
+          "skew_chg": -1.76,
+          "dnvar": 26.83,
+          "upvar": 25.09,
+          "skew_r": 0.94,
+          "convex": 1.11,
+          "convex_chg": 0
+        },
+        {
+          "period": "1Y",
+          "cvol": 25.97,
+          "chg": 4.12,
+          "lo": 19.2,
+          "hi": 46.46,
+          "proximity": 0.2483,
           "skew": -1.73,
           "skew_chg": -1.76,
           "dnvar": 26.83,
@@ -10712,12 +11427,22 @@
           "dnvar": 26.83,
           "upvar": 25.09,
           "convex": 1.11
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 25.97,
+          "chg": 4.12,
+          "proximity": 1,
+          "skew": -1.73,
+          "dnvar": 26.83,
+          "upvar": 25.09,
+          "convex": 1.11
         }
       ]
     },
     {
       "name": "Silver",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 49.95,
         "latest_chg": 6.39,
@@ -10822,6 +11547,21 @@
           "lo": 35.27,
           "hi": 67.34,
           "proximity": 0.4577,
+          "skew": 0.8,
+          "skew_chg": -2.3,
+          "dnvar": 49.54,
+          "upvar": 50.35,
+          "skew_r": 1.02,
+          "convex": 1.11,
+          "convex_chg": -0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 49.95,
+          "chg": 6.39,
+          "lo": 32.61,
+          "hi": 125.91,
+          "proximity": 0.1859,
           "skew": 0.8,
           "skew_chg": -2.3,
           "dnvar": 49.54,
@@ -11081,19 +11821,29 @@
           "dnvar": 49.54,
           "upvar": 50.35,
           "convex": 1.11
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 49.95,
+          "chg": 6.39,
+          "proximity": 1,
+          "skew": 0.8,
+          "dnvar": 49.54,
+          "upvar": 50.35,
+          "convex": 1.11
         }
       ]
     },
     {
       "name": "Copper",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 26.14,
         "latest_chg": 2.38,
-        "proximity_1m": 0.7433,
+        "proximity_1m": 0.8798,
         "skew_1m": 0.36,
         "convex_1m": 1.14,
-        "is_near_high": false,
+        "is_near_high": true,
         "is_near_low": false
       },
       "term_structure": [
@@ -11111,7 +11861,7 @@
           "period": "1M",
           "cvol": 26.14,
           "chg": 2.38,
-          "proximity": 0.7433,
+          "proximity": 0.8798,
           "skew": 0.36,
           "convex": 1.14,
           "dnvar": 25.96,
@@ -11159,8 +11909,8 @@
           "cvol": 26.14,
           "chg": 2.38,
           "lo": 22.26,
-          "hi": 27.48,
-          "proximity": 0.7433,
+          "hi": 26.67,
+          "proximity": 0.8798,
           "skew": 0.36,
           "skew_chg": -1.98,
           "dnvar": 25.96,
@@ -11191,6 +11941,21 @@
           "lo": 22.26,
           "hi": 39.37,
           "proximity": 0.2268,
+          "skew": 0.36,
+          "skew_chg": -1.98,
+          "dnvar": 25.96,
+          "upvar": 26.32,
+          "skew_r": 1.01,
+          "convex": 1.14,
+          "convex_chg": 0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 26.14,
+          "chg": 2.38,
+          "lo": 22.26,
+          "hi": 47.93,
+          "proximity": 0.1511,
           "skew": 0.36,
           "skew_chg": -1.98,
           "dnvar": 25.96,
@@ -11450,12 +12215,22 @@
           "dnvar": 25.96,
           "upvar": 26.32,
           "convex": 1.14
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 26.14,
+          "chg": 2.38,
+          "proximity": 0.8798,
+          "skew": 0.36,
+          "dnvar": 25.96,
+          "upvar": 26.32,
+          "convex": 1.14
         }
       ]
     },
     {
       "name": "WTI CRUDE OIL",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 60.91,
         "latest_chg": 1.82,
@@ -11490,7 +12265,7 @@
           "period": "3M",
           "cvol": 60.91,
           "chg": 1.82,
-          "proximity": 0.7088,
+          "proximity": 0.8144,
           "skew": 14.33,
           "convex": 1.15,
           "dnvar": 53.32,
@@ -11543,8 +12318,8 @@
           "cvol": 60.91,
           "chg": 1.82,
           "lo": 44.41,
-          "hi": 67.69,
-          "proximity": 0.7088,
+          "hi": 64.67,
+          "proximity": 0.8144,
           "skew": 14.33,
           "skew_chg": 0.08,
           "dnvar": 53.32,
@@ -11560,6 +12335,21 @@
           "lo": 40.48,
           "hi": 92.87,
           "proximity": 0.39,
+          "skew": 14.33,
+          "skew_chg": 0.08,
+          "dnvar": 53.32,
+          "upvar": 67.65,
+          "skew_r": 1.27,
+          "convex": 1.15,
+          "convex_chg": 0
+        },
+        {
+          "period": "1Y",
+          "cvol": 60.91,
+          "chg": 1.82,
+          "lo": 30.49,
+          "hi": 142.68,
+          "proximity": 0.2711,
           "skew": 14.33,
           "skew_chg": 0.08,
           "dnvar": 53.32,
@@ -11819,12 +12609,22 @@
           "dnvar": 53.32,
           "upvar": 67.65,
           "convex": 1.15
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 60.91,
+          "chg": 1.82,
+          "proximity": 0.8422,
+          "skew": 14.33,
+          "dnvar": 53.32,
+          "upvar": 67.65,
+          "convex": 1.15
         }
       ]
     },
     {
       "name": "Heating Oil",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 62.78,
         "latest_chg": -0.66,
@@ -11929,6 +12729,21 @@
           "lo": 39.84,
           "hi": 89.34,
           "proximity": 0.4634,
+          "skew": 12.85,
+          "skew_chg": 1.1,
+          "dnvar": 56.03,
+          "upvar": 68.88,
+          "skew_r": 1.23,
+          "convex": 1.05,
+          "convex_chg": -0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 62.78,
+          "chg": -0.66,
+          "lo": 29.52,
+          "hi": 113.51,
+          "proximity": 0.396,
           "skew": 12.85,
           "skew_chg": 1.1,
           "dnvar": 56.03,
@@ -12188,12 +13003,22 @@
           "dnvar": 56.03,
           "upvar": 68.88,
           "convex": 1.05
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 62.78,
+          "chg": -0.66,
+          "proximity": 0.3149,
+          "skew": 12.85,
+          "dnvar": 56.03,
+          "upvar": 68.88,
+          "convex": 1.05
         }
       ]
     },
     {
       "name": "NAT GAS",
-      "as_of": "2026-10-30",
+      "as_of": "2026-11-02",
       "summary": {
         "latest_cvol": 85.17,
         "latest_chg": 0.04,
@@ -12265,7 +13090,7 @@
           "period": "1M",
           "cvol": 85.17,
           "chg": 0.04,
-          "lo": 62.05,
+          "lo": 68.84,
           "hi": 85.17,
           "proximity": 1,
           "skew": 39.17,
@@ -12298,6 +13123,21 @@
           "lo": 45.44,
           "hi": 85.17,
           "proximity": 1,
+          "skew": 39.17,
+          "skew_chg": -2.67,
+          "dnvar": 63.3,
+          "upvar": 102.47,
+          "skew_r": 1.62,
+          "convex": 1.24,
+          "convex_chg": -0.01
+        },
+        {
+          "period": "1Y",
+          "cvol": 85.17,
+          "chg": 0.04,
+          "lo": 45.44,
+          "hi": 160.35,
+          "proximity": 0.3457,
           "skew": 39.17,
           "skew_chg": -2.67,
           "dnvar": 63.3,
@@ -12557,6 +13397,16 @@
           "dnvar": 63.3,
           "upvar": 102.47,
           "convex": 1.24
+        },
+        {
+          "date": "2026-11-02",
+          "cvol": 85.17,
+          "chg": 0.04,
+          "proximity": 1,
+          "skew": 39.17,
+          "dnvar": 63.3,
+          "upvar": 102.47,
+          "convex": 1.24
         }
       ]
     }
@@ -12587,7 +13437,7 @@
       "name": "3M SOFR",
       "cvol": 113.24,
       "chg": 10.26,
-      "proximity": 0.6907,
+      "proximity": 0.6424,
       "skew": -39.64
     },
     {
@@ -12629,7 +13479,7 @@
       "name": "Copper",
       "cvol": 26.14,
       "chg": 2.38,
-      "proximity": 0.7433,
+      "proximity": 0.8798,
       "skew": 0.36
     },
     {
@@ -12643,7 +13493,7 @@
       "name": "JPYUSD",
       "cvol": 8.15,
       "chg": 0.13,
-      "proximity": 0.0875,
+      "proximity": 0.1117,
       "skew": 2.59
     },
     {
@@ -12671,7 +13521,7 @@
       "name": "GBPUSD",
       "cvol": 6.1,
       "chg": 0.05,
-      "proximity": 0.0273,
+      "proximity": 0.049,
       "skew": -0.55
     },
     {
